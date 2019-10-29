@@ -5,10 +5,12 @@ import com.javagda25.securitytemplate.model.AccountRole;
 import com.javagda25.securitytemplate.model.dto.AccountPasswordResetRequest;
 import com.javagda25.securitytemplate.repository.AccountRepository;
 import com.javagda25.securitytemplate.repository.AccountRoleRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -103,6 +105,16 @@ public class AccountService {
             account.setAccountRoles(newCollectionOfRoles);
 
             accountRepository.save(account);
+        }
+    }
+
+    public Account findByUsername(String username) {
+        Optional<Account> optionalAccount = accountRepository.findByUsername(username);
+        if (optionalAccount.isPresent()){
+            return optionalAccount.get();
+        }
+        else {
+            throw new EntityNotFoundException();
         }
     }
 }

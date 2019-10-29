@@ -1,17 +1,11 @@
 package com.javagda25.securitytemplate.model;
 
-import com.sun.xml.bind.v2.model.core.ID;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -24,7 +18,7 @@ public class Account {
     private Long id;
 
     @NotEmpty
-    @Size(min = 4)
+    @Size(min = 3)
     private String username;
 
     @NotEmpty
@@ -36,6 +30,26 @@ public class Account {
     private Set<AccountRole> accountRoles;
 
     private boolean locked;
+    private String name;
+    private String surname;
+    private String lycraSize;
+
+    @Enumerated(value = EnumType.STRING)
+    private RiderType riderType;
+
+    @Enumerated(value = EnumType.STRING)
+    private Stance stance;
+
+    private String boardBrand;
+    private String kiteBrand;
+    private String team;
+    private String city;
+    private byte[] photo;
+    private Integer rankNumber;
+
+    @ManyToMany(mappedBy = "accounts",fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
+    private Set<Event> events;
 
     public boolean isAdmin() {
         return accountRoles.stream()

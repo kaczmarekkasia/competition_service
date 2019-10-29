@@ -104,3 +104,8 @@
     margin: 16px 0 16px 0;
     padding: 0 5px 0 5px;
 }
+
+.logo{
+    height : 50px;
+    border-radius: 50px;
+}

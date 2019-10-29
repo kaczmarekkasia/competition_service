@@ -42,7 +42,6 @@ public class AccountController {
             return registrationError(model, account, result.getFieldError().getDefaultMessage());
         }
 
-        // todo: tworzenie konta
         if (!account.getPassword().equals(passwordConfirm)) {
             return registrationError(model, account, "Passwords do not match.");
         }
