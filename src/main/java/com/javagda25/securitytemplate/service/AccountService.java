@@ -120,16 +120,7 @@ public class AccountService {
         }
     }
 
-    public void saveAsRider(Long riderId, String name, String username, String lycraSize, String riderType, String stance, String kiteBrand, String boardBrand, String city){
-       Account rider = accountRepository.getOne(riderId);
-       rider.setName(name);
-       rider.setUsername(username);
-       rider.setLycraSize(lycraSize);
-       rider.setRiderType(RiderType.valueOf(riderType));
-       rider.setStance(Stance.valueOf(stance));
-       rider.setBoardBrand(boardBrand);
-       rider.setKiteBrand(kiteBrand);
-       rider.setCity(city);
+    public void saveAsRider(Account rider){
        accountRepository.save(rider);
     }
 }

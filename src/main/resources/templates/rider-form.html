@@ -9,15 +9,15 @@
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
     <h1>Formularz zawodnika</h1>
-    <form th:action="@{/rider/add}" method="post">
-        <input type="hidden" th:field="*{riderId}" th:name="*{riderId}">
+    <form th:action="@{/rider/add}" method="post" th:object="${account}">
+        <input type="hidden" th:field="*{riderId}" th:name="*{riderId}" >
         <div class="row col-12 form-container">
             <div class="row col-md-12 form-input-row">
                 <div class="col-md-6">
                     <label for="name">Imię</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="text" id="name" th:name="name">
+                    <input class="form-control" type="text" id="name" th:name="name" th:field="*{name}">
                 </div>
             </div>
             <div class="row col-md-12 form-input-row">
@@ -25,7 +25,7 @@
                     <label for="surname">Nazwisko:</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="text" id="surname" th:name="surname">
+                    <input class="form-control" type="text" id="surname" th:name="surname" th:field="*{surname}">
                 </div>
             </div>
             <div class="row col-md-12 form-input-row">
@@ -33,7 +33,7 @@
                     <label for="lycraSize">Rozmiar lycry:</label>
                 </div>
                 <div class="col-md-6">
-                    <select class="form-control" type="text" id="lycraSize" th:name="lycraSize" >
+                    <select class="form-control" type="text" id="lycraSize" th:name="lycraSize" th:field="*{lycraSize}">
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
@@ -46,7 +46,7 @@
                     <label for="riderType">Grupa:</label>
                 </div>
                 <div class="col-md-6">
-                    <select class="form-control" type="text" id="riderType" th:name="riderType" >
+                    <select class="form-control" type="text" id="riderType" th:name="riderType" th:field="*{riderType}">
                         <option>MEN</option>
                         <option>WOMAN</option>
                         <option>JUNIOR</option>
@@ -58,7 +58,7 @@
                     <label for="stance">Stance:</label>
                 </div>
                 <div class="col-md-6">
-                    <select class="form-control" type="text" id="stance" th:name="stance" >
+                    <select class="form-control" type="text" id="stance" th:name="stance" th:field="*{stance}">
                         <option>GOOFY</option>
                         <option>REGULAR</option>
                     </select>
@@ -69,7 +69,7 @@
                     <label for="boardBrand">Deska:</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="text" id="boardBrand" th:name="boardBrand" >
+                    <input class="form-control" type="text" id="boardBrand" th:name="boardBrand" th:field="*{boardBrand}">
                 </div>
             </div>
             <div class="row col-md-12 form-input-row">
@@ -77,7 +77,7 @@
                     <label for="kiteBrand">Latawiec:</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="text" id="kiteBrand" th:name="kiteBrand" >
+                    <input class="form-control" type="text" id="kiteBrand" th:name="kiteBrand" th:field="*{kiteBrand}">
                 </div>
             </div>
             <div class="row col-md-12 form-input-row">
@@ -85,7 +85,7 @@
                     <label for="city">Miasto:</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="text" id="city" th:name="city" >
+                    <input class="form-control" type="text" id="city" th:name="city" th:filed="*{city}">
                 </div>
             </div>
             <div class="row col-md-12 form-button-row">
