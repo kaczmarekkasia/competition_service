@@ -7,7 +7,9 @@ import com.javagda25.securitytemplate.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -48,5 +50,17 @@ public class EventService {
                     break;
             }
         }
+    }
+
+    public void setLocalization(Long eventId, String localization) {
+        if(eventRepository.existsById(eventId)){
+            Event eventToEditLocalization = eventRepository.findById(eventId).get();
+            eventToEditLocalization.setLocalization(localization);
+            eventRepository.save(eventToEditLocalization);
+        }
+    }
+
+    public Optional<Event> findById(Long eventId) {
+        return eventRepository.findById(eventId);
     }
 }

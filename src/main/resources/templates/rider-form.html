@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formularz zawodnika</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+<div class="container">
+    <h1>Formularz zawodnika</h1>
+    <form th:action="@{/rider/add}" method="post">
+        <input type="hidden" th:field="*{riderId}" th:name="*{riderId}">
+        <div class="row col-12 form-container">
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="name">Imię</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" id="name" th:name="name">
+                </div>
+            </div>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="surname">Nazwisko:</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" id="surname" th:name="surname">
+                </div>
+            </div>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="lycraSize">Rozmiar lycry:</label>
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control" type="text" id="lycraSize" th:name="lycraSize" >
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="riderType">Grupa:</label>
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control" type="text" id="riderType" th:name="riderType" >
+                        <option>MEN</option>
+                        <option>WOMAN</option>
+                        <option>JUNIOR</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="stance">Stance:</label>
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control" type="text" id="stance" th:name="stance" >
+                        <option>GOOFY</option>
+                        <option>REGULAR</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="boardBrand">Deska:</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" id="boardBrand" th:name="boardBrand" >
+                </div>
+            </div>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="kiteBrand">Latawiec:</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" id="kiteBrand" th:name="kiteBrand" >
+                </div>
+            </div>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-6">
+                    <label for="city">Miasto:</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" id="city" th:name="city" >
+                </div>
+            </div>
+            <div class="row col-md-12 form-button-row">
+                <div class="col-md-6">
+                    <button type="reset" class="btn btn-warning offset-3 col-md-6">Zresetuj</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary offset-3 col-md-6">Zapisz</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>

@@ -9,14 +9,15 @@
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
     <h1>Formularz dodawania eventów</h1>
-    <form th:action="@{/event/add}" method="post">
+    <form th:action="@{/event/add}" method="post" th:object="${event}">
+        <input type="hidden" th:field="*{id}" th:name="*{id}">
         <div class="row col-12 form-container">
             <div class="row col-md-12 form-input-row">
                 <div class="col-md-6">
                     <label for="name">Nazwa eventu</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="text" id="name" th:name="name">
+                    <input class="form-control" type="text" id="name" th:name="name" th:value="*{name}">
                 </div>
             </div>
             <div class="row col-md-12 form-input-row">
@@ -24,7 +25,7 @@
                     <label for="eventDate">Data eventu:</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="date" id="eventDate" th:name="date">
+                    <input class="form-control" type="date" id="eventDate" th:name="date" th:value="*{date}">
                 </div>
             </div>
             <div class="row col-md-12 form-input-row">
@@ -32,7 +33,7 @@
                     <label for="eventDate">Lokalizacja:</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" type="text" id="localization" th:name="localization">
+                    <input class="form-control" type="text" id="localization" th:name="localization" th:value="*{localization}">
                 </div>
             </div>
             <div class="row col-md-12 form-button-row">

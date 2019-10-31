@@ -2,6 +2,8 @@ package com.javagda25.securitytemplate.service;
 
 import com.javagda25.securitytemplate.model.Account;
 import com.javagda25.securitytemplate.model.AccountRole;
+import com.javagda25.securitytemplate.model.RiderType;
+import com.javagda25.securitytemplate.model.Stance;
 import com.javagda25.securitytemplate.model.dto.AccountPasswordResetRequest;
 import com.javagda25.securitytemplate.repository.AccountRepository;
 import com.javagda25.securitytemplate.repository.AccountRoleRepository;
@@ -116,5 +118,18 @@ public class AccountService {
         else {
             throw new EntityNotFoundException();
         }
+    }
+
+    public void saveAsRider(Long riderId, String name, String username, String lycraSize, String riderType, String stance, String kiteBrand, String boardBrand, String city){
+       Account rider = accountRepository.getOne(riderId);
+       rider.setName(name);
+       rider.setUsername(username);
+       rider.setLycraSize(lycraSize);
+       rider.setRiderType(RiderType.valueOf(riderType));
+       rider.setStance(Stance.valueOf(stance));
+       rider.setBoardBrand(boardBrand);
+       rider.setKiteBrand(kiteBrand);
+       rider.setCity(city);
+       accountRepository.save(rider);
     }
 }

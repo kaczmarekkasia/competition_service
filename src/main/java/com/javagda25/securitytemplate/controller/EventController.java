@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.util.List;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/event/")
@@ -30,8 +30,20 @@ public class EventController {
 
 
     @GetMapping("/add")
-    public String addEvent() {
+    public String addEvent(Model model, Event event) {
+        model.addAttribute("event", event);
         return "event-form";
+    }
+
+    @GetMapping("/edit")
+    public String editEvent(Model model, @RequestParam (name = "eventId") Long eventId) {
+        model.addAttribute("eventId", eventId);
+        Optional<Event> optionalEvent = eventService.findById(eventId);
+        if (optionalEvent.isPresent()) {
+            model.addAttribute("event", optionalEvent.get());
+            return "event-form";
+        }
+        return "redirect:/event/list";
     }
 
     @PostMapping("/add")
@@ -61,4 +73,6 @@ public class EventController {
         return "redirect:/event/list";
 
     }
+
+
 }

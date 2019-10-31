@@ -29,19 +29,18 @@
                         </button>
                     </a>
                 </div>
-                <div class="col-3">
+                <div class="col-3" th:if="${event.getStatus().name() != 'PAST'}">
                     <a th:href="@{/event/toggleStatus(eventId=${event.getId()})}">
                         <button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-primary"
                                 th:text="${event.getStatus().name() != 'CURRENT' ? 'Rozpocznij' : 'Zakończ'}">
                         </button>
                     </a>
                 </div>
-                <div class="col-3">
-                    <!--<a th:href="@{/admin/account/resetPassword(accountId=${account.getId()})}">-->
-                        <!--<button type="button" class="btn btn-primary">-->
-                            <!--Reset Password-->
-                        <!--</button>-->
-                    <!--</a>-->
+                <div class="col-3" th:if="${event.getStatus().name() != 'PAST'}">
+                    <a th:href="@{/event/edit(eventId=${event.getId()})}">
+                        <button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-primary">Edytuj JAM
+                        </button>
+                    </a>
                 </div>
                 <div class="col-3">
                     <!--<a th:href="@{/admin/account/editRoles(accountId=${account.getId()})}">-->
