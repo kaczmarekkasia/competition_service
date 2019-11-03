@@ -9,8 +9,8 @@
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
     <h1>Formularz zawodnika</h1>
-    <form th:action="@{/rider/add}" method="post" th:object="${account}">
-        <input type="hidden" th:field="*{riderId}" th:name="*{riderId}" >
+    <form th:action="@{/rider/add}" method="post" th:object="${rider}">
+        <input type="hidden" th:field="*{id}" th:name="*{id}" >
         <div class="row col-12 form-container">
             <div class="row col-md-12 form-input-row">
                 <div class="col-md-6">
@@ -34,10 +34,10 @@
                 </div>
                 <div class="col-md-6">
                     <select class="form-control" type="text" id="lycraSize" th:name="lycraSize" th:field="*{lycraSize}">
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                        <option>XL</option>
+                        <option th:value="S">S</option>
+                        <option th:value="M">M</option>
+                        <option th:value="L">L</option>
+                        <option th:value="XL">XL</option>
                     </select>
                 </div>
             </div>
@@ -47,9 +47,9 @@
                 </div>
                 <div class="col-md-6">
                     <select class="form-control" type="text" id="riderType" th:name="riderType" th:field="*{riderType}">
-                        <option>MEN</option>
-                        <option>WOMAN</option>
-                        <option>JUNIOR</option>
+                        <option th:value="${T(com.javagda25.securitytemplate.model.RiderType).MAN}">MAN</option>
+                        <option th:value="${T(com.javagda25.securitytemplate.model.RiderType).WOMAN}">WOMAN</option>
+                        <option th:value="${T(com.javagda25.securitytemplate.model.RiderType).JUNIOR}">JUNIOR</option>
                     </select>
                 </div>
             </div>
@@ -59,8 +59,8 @@
                 </div>
                 <div class="col-md-6">
                     <select class="form-control" type="text" id="stance" th:name="stance" th:field="*{stance}">
-                        <option>GOOFY</option>
-                        <option>REGULAR</option>
+                        <option th:value="${T(com.javagda25.securitytemplate.model.Stance).REGULAR}">REGULAR</option>
+                        <option th:value="${T(com.javagda25.securitytemplate.model.Stance).GOOFY}">GOOFY</option>
                     </select>
                 </div>
             </div>

@@ -27,13 +27,14 @@ public class RiderController {
     @GetMapping("/add")
     public String addRider(Model model, Principal principal){
         Account rider = accountService.findByUsername(principal.getName());
-        model.addAttribute("riderId", rider.getId());
+        model.addAttribute("id", rider.getId());
+        model.addAttribute("rider", rider);
         return "rider-form";
     }
 
     @PostMapping("/add")
-    public String addRider(Account account){
-        accountService.saveAsRider(account);
+    public String addRider(Account rider){
+        accountService.saveAsRider(rider);
         return "redirect: /";
 
 
