@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -27,7 +28,7 @@ public class Account {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
-    private Set<AccountRole> accountRoles;
+    private Set<AccountRole> accountRoles = new HashSet<>();
 
     private boolean locked;
     private String name;

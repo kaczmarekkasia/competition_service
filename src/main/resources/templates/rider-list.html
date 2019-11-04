@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+    <meta charset="UTF-8">
+    <title>Lista zawodików</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+<div class="container">
+    <h1>Lista zawodników <p th:text="${event.getName()}"></p></h1>
+    <div class="row col-md-12">
+        <div class="row col-md-12 list-header-row">
+            <div class="col-3">Imię</div>
+            <div class="col-2">Nazwisko</div>
+            <div class="col-2">Ksywka</div>
+            <div class="col-2">Misato</div>
+            <div class="col-3"><!--Buttons--></div>
+        </div>
+        <div th:each="rider : ${ridersList}" class="row col-md-12 list-data-row">
+            <div class="col-3" th:text="${rider.getName()}"></div>
+            <div class="col-2" th:text="${rider.getSurname()}"></div>
+            <div class="col-2" th:text="${rider.getUsername()}"></div>
+            <div class="col-2" th:text="${rider.getCity()}"></div>
+            <div class="row col-3">
+                <!--<div class="col-3">-->
+                    <!--<a th:href="@{/event/remove(eventId=${rider.getId()})}">-->
+                        <!--<button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-danger">Usuń event-->
+                        <!--</button>-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="col-3" th:if="${rider.getStatus().name() != 'PAST'}">-->
+                    <!--<a th:href="@{/event/toggleStatus(eventId=${rider.getId()})}">-->
+                        <!--<button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-primary"-->
+                                <!--th:text="${rider.getStatus().name() != 'CURRENT' ? 'Rozpocznij' : 'Zakończ'}">-->
+                        <!--</button>-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="col-3" th:if="${rider.getStatus().name() != 'PAST'}">-->
+                    <!--<a th:href="@{/event/edit(eventId=${rider.getId()})}">-->
+                        <!--<button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-primary">Edytuj JAM-->
+                        <!--</button>-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="col-3">-->
+                    <!--&lt;!&ndash;<a th:href="@{/admin/account/editRoles(accountId=${account.getId()})}">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary">&ndash;&gt;-->
+                    <!--&lt;!&ndash;Edit roles&ndash;&gt;-->
+                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>

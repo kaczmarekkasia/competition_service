@@ -60,7 +60,11 @@ public class EventService {
         }
     }
 
-    public Optional<Event> findById(Long eventId) {
-        return eventRepository.findById(eventId);
+    public Event findById(Long eventId) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+        if(optionalEvent.isPresent()) {
+            return optionalEvent.get();
+        }
+        throw new EntityNotFoundException();
     }
 }

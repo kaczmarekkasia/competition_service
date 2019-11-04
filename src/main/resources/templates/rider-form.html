@@ -10,7 +10,7 @@
 <div class="container">
     <h1>Formularz zawodnika</h1>
     <form th:action="@{/rider/add}" method="post" th:object="${rider}">
-        <input type="hidden" th:field="*{id}" th:name="*{id}" >
+        <input type="hidden" th:field="*{id}" >
         <div class="row col-12 form-container">
             <div class="row col-md-12 form-input-row">
                 <div class="col-md-6">

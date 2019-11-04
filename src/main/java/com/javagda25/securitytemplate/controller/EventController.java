@@ -2,6 +2,7 @@ package com.javagda25.securitytemplate.controller;
 
 import com.javagda25.securitytemplate.model.Account;
 import com.javagda25.securitytemplate.model.Event;
+import com.javagda25.securitytemplate.repository.EventRepository;
 import com.javagda25.securitytemplate.service.AccountService;
 import com.javagda25.securitytemplate.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -21,11 +23,13 @@ public class EventController {
 
     private EventService eventService;
     private AccountService accountService;
+    private EventRepository eventRepository;
 
     @Autowired
-    public EventController(EventService eventService, AccountService accountService) {
+    public EventController(EventService eventService, AccountService accountService, EventRepository eventRepository) {
         this.eventService = eventService;
         this.accountService = accountService;
+        this.eventRepository = eventRepository;
     }
 
 
@@ -36,14 +40,11 @@ public class EventController {
     }
 
     @GetMapping("/edit")
-    public String editEvent(Model model, @RequestParam (name = "eventId") Long eventId) {
+    public String editEvent(Model model, @RequestParam(name = "eventId") Long eventId) {
         model.addAttribute("eventId", eventId);
-        Optional<Event> optionalEvent = eventService.findById(eventId);
-        if (optionalEvent.isPresent()) {
-            model.addAttribute("event", optionalEvent.get());
-            return "event-form";
-        }
-        return "redirect:/event/list";
+        model.addAttribute("event", eventService.findById(eventId));
+        return "event-form";
+
     }
 
     @PostMapping("/add")
@@ -54,9 +55,12 @@ public class EventController {
     }
 
     @GetMapping("/list")
-    public String listEvents(Model model) {
+    public String listEvents(Model model, Principal principal) {
         model.addAttribute("eventList", eventService.listAll());
-
+        if (principal != null) {
+            Account currentlyLoggedIn = accountService.findByUsername(principal.getName());
+            model.addAttribute("currentlyLoggedIn", currentlyLoggedIn);
+        }
         return "event-list";
     }
 
@@ -68,11 +72,25 @@ public class EventController {
     }
 
     @GetMapping("/toggleStatus")
-    public String toggleStatus(@RequestParam (name = "eventId") Long eventId){
+    public String toggleStatus(@RequestParam(name = "eventId") Long eventId) {
         eventService.toggleStatus(eventId);
         return "redirect:/event/list";
 
     }
 
+    @GetMapping("/joinEvent")
+    public String joinEvent(Model model, @RequestParam(name = "eventId") Long eventId, Principal principal) {
+        model.addAttribute("eventId", eventId);
 
+        Event event = eventService.findById(eventId);
+        Account rider = accountService.findByUsername(principal.getName());
+
+        model.addAttribute("rider", rider);
+
+        event.getAccounts().add(rider);
+        eventRepository.save(event);
+
+
+        return "redirect:/event/list";
+    }
 }

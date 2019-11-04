@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -112,15 +113,33 @@ public class AccountService {
 
     public Account findByUsername(String username) {
         Optional<Account> optionalAccount = accountRepository.findByUsername(username);
-        if (optionalAccount.isPresent()){
+        if (optionalAccount.isPresent()) {
             return optionalAccount.get();
-        }
-        else {
-            throw new EntityNotFoundException();
+        } else {
+            throw new EntityNotFoundException("No such username found");
         }
     }
 
-    public void saveAsRider(Account rider){
-       accountRepository.save(rider);
+    public void saveAsRider(Account rider, Principal principal) {
+        Optional<Account> optionalAccount = accountRepository.findByUsername(principal.getName());
+        if (optionalAccount.isPresent()) {
+            Account account = optionalAccount.get();
+            rider.setUsername(account.getUsername());
+            rider.setPassword(account.getPassword());
+            rider.setAccountRoles(account.getAccountRoles());
+            Optional<AccountRole> accountRoleOptional = accountRoleRepository.findByName("RIDER");
+            if(accountRoleOptional.isPresent()) {
+                rider.getAccountRoles().add(accountRoleOptional.get());
+                accountRepository.save(rider);
+            }
+        }
+    }
+
+    public List<Account> getAllRiders() {
+        Optional<AccountRole> optionalAccountRole = accountRoleRepository.findByName("RIDER");
+        if(optionalAccountRole.isPresent()){
+            return accountRepository.findAccountsByAccountRolesContains(optionalAccountRole.get());
+        }
+        throw new EntityNotFoundException();
     }
 }
