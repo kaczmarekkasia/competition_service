@@ -5,10 +5,52 @@
     <title>Panel sędziowski</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
-<body>
+<body style="background-color: #8c99a8">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
 
+
+    <table class="table table-bordered table form-container">
+        <thead>
+        <tr>
+            <th scope="col">MAN</th>
+            <th scope="col">WOMAN</th>
+            <th scope="col">JUNIOR</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><a class="text-dark" th:href="@{/event/list}">Round1</a></td>
+            <td><a class="text-dark" th:href="@{/event/list}">Final</a></td>
+            <td><a class="text-dark" th:href="@{/event/list}">Final</a></td>
+        </tr>
+        <tr>
+            <td><a class="text-dark" th:href="@{/event/list}">Round2</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><a class="text-dark" th:href="@{/event/list}">Quatter Finals</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><a class="text-dark" th:href="@{/event/list}">Semi Final</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><a class="text-dark" th:href="@{/event/list}">Loosers</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><a class="text-dark" th:href="@{/event/list}">Final</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 <th:block th:replace="fragments :: footer" th:remove="tag"/>

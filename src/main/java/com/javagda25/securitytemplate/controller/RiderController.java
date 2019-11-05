@@ -39,7 +39,7 @@ public class RiderController {
     @PostMapping("/add")
     public String addRider(Account rider,Principal principal){
         accountService.saveAsRider(rider, principal);
-        return "redirect:/rider/list";
+        return "redirect:/event/list";
     }
 
     @GetMapping ("/list")

@@ -5,7 +5,7 @@
     <title>Lista JAMów</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
-<body>
+<body style="background-color: #8c99a8">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 
 <div class="container">
@@ -46,10 +46,18 @@
     <div class="row col-md-12" >
         <div class="row col-12">
 
-            <div class="col-3">
+            <div class="col-2">
                 <a th:href="@{/rider/list(eventId=${event.getId()})}" class="col-12">
                     <button type="button" class="btn btn-primary">
                         Lista zawodników
+                    </button>
+                </a>
+            </div>
+
+            <div class="col-2" th:if="${event.getStatus().name() != 'PAST'}" sec:authorize="hasRole('REFEREE')" >
+                <a th:href="@{/referee/startPage(eventId=${event.getId()})}" class="col-12">
+                    <button type="button" class="btn btn-primary">
+                        Panel sędziowski
                     </button>
                 </a>
             </div>
@@ -61,7 +69,7 @@
                 </a>
             </div>
 
-            <div class="col-3" sec:authorize="hasRole('ADMIN')"  th:if="${event.getStatus().name() != 'PAST'}">
+            <div class="col-2" sec:authorize="hasRole('ADMIN')"  th:if="${event.getStatus().name() != 'PAST'}">
                 <a th:href="@{/event/toggleStatus(eventId=${event.getId()})}" class="col-12">
                     <button type="button" class="btn btn-primary"
                             th:text="${event.getStatus().name() != 'CURRENT' ? 'Rozpocznij' : 'Zakończ'}">
@@ -76,7 +84,7 @@
                 </a>
             </div>
 
-            <div class="col-3" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
+            <div class="col-2" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
                 <a th:href="@{/event/joinEvent(eventId=${event.getId()})}" class="col-12">
                     <button type="button" class="btn btn-primary">
                         Dołącz

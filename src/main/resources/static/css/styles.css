@@ -22,7 +22,7 @@
  */
 
 .site-header {
-    background-color: rgba(0, 73, 85, .85);
+    background-color: #454c52;
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
 }

@@ -95,19 +95,18 @@ public class EventController {
     }
 
     @GetMapping("/removeRider")
-    public String removeRider(Model model, @RequestParam (name = "riderId") Long riderId,
+    public String removeRider(@RequestParam (name = "riderId") Long riderId,
                               @RequestParam (name = "eventId") Long eventId){
-        model.addAttribute("riderId", riderId);
-        model.addAttribute("eventId", eventId);
+//        model.addAttribute("riderId", riderId);
+//        model.addAttribute("eventId", eventId);
 
         Event event = eventService.findById(eventId);
         Optional<Account> optionalAccount = accountService.findById(riderId);
 
         if(optionalAccount.isPresent()) {
             Account rider = optionalAccount.get();
-            if (event.getAccounts().contains(rider)) {
-                event.getAccounts().remove(rider);
-            }
+            event.getAccounts().remove(rider);
+            eventRepository.save(event);
         }
 
         return "redirect:/event/list";
