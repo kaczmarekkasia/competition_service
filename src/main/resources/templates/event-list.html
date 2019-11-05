@@ -7,60 +7,85 @@
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
+
 <div class="container">
-
-    <h1>Lista JAMów</h1>
-    <div class="row col-md-12">
-        <div class="row col-md-12 list-header-row">
-            <div class="col-3">Nazwa</div>
-            <div class="col-2">Data</div>
-            <div class="col-2">Status</div>
-            <div class="col-2">Lokalizacja</div>
-            <div class="col-3"><!--Buttons--></div>
+        <div class="row col-md-12" >
+            <h1>Lista JAMów</h1>
         </div>
-        <div th:each="event : ${eventList}" class="row col-md-12 list-data-row">
-            <div class="col-3" th:text="${event.getName()}"></div>
-            <div class="col-2" th:text="${event.getDate()}"></div>
-            <div class="col-2" th:text="${event.getStatus()}"></div>
-            <div class="col-2" th:text="${event.getLocalization()}"></div>
-            <div class="row col-3">
-                <div class="col-2">
-                    <a th:href="@{/rider/list(eventId=${event.getId()})}" class="col-12">
-                        <button type="button" class="btn btn-primary">
-                            Lista zawodników
-                        </button>
-                    </a>
-                </div>
-                <div class="col-2" sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/event/remove(eventId=${event.getId()})}" class="col-12">
-                        <button  type="button" class="btn btn-danger">Usuń event
-                        </button>
-                    </a>
-                </div>
-                <div class="col-2" sec:authorize="hasRole('ADMIN')"  th:if="${event.getStatus().name() != 'PAST'}">
-                    <a th:href="@{/event/toggleStatus(eventId=${event.getId()})}" class="col-12">
-                        <button type="button" class="btn btn-primary"
-                                th:text="${event.getStatus().name() != 'CURRENT' ? 'Rozpocznij' : 'Zakończ'}">
-                        </button>
-                    </a>
-                </div>
-                <div class="col-2" sec:authorize="hasRole('ADMIN')" th:if="${event.getStatus().name() != 'PAST'}">
-                    <a th:href="@{/event/edit(eventId=${event.getId()})}" class="col-12">
-                        <button  type="button" class="btn btn-primary">Edytuj JAM
-                        </button>
-                    </a>
-                </div>
-                <div class="col-2" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
-                    <a th:href="@{/event/joinEvent(eventId=${event.getId()})}" class="col-12">
-                        <button type="button" class="btn btn-primary">
-                            Dołącz
-                        </button>
-                    </a>
-                </div>
+        <div class="row col-md-12">
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/event/add}" class="col-12">
+                <button type="button" class="btn btn-primary">
+                    Dodaj nowy JAM
+                </button>
+            </a>
+        </div>
+</div>
 
-            </div>
+
+<div class="container">
+        <div class="row col-md-12 list-header-row">
+            <div class="col-3"><h2>Nazwa</h2></div>
+            <div class="col-3"><h2>Data</h2></div>
+            <div class="col-3"><h2>Status</h2></div>
+            <div class="col-3"><h2>Lokalizacja</h2></div>
         </div>
     </div>
+</div>
+
+<div class="container" th:each="event : ${eventList}">
+
+    <div class="row col-md-12">
+        <div  class="row col-md-12 list-data-row">
+            <div class="col-3" th:text="${event.getName()}"></div>
+            <div class="col-3" th:text="${event.getDate()}"></div>
+            <div class="col-3" th:text="${event.getStatus()}"></div>
+            <div class="col-3" th:text="${event.getLocalization()}"></div>
+        </div>
+    </div>
+
+    <div class="row col-md-12" >
+        <div class="row col-12">
+
+            <div class="col-3">
+                <a th:href="@{/rider/list(eventId=${event.getId()})}" class="col-12">
+                    <button type="button" class="btn btn-primary">
+                        Lista zawodników
+                    </button>
+                </a>
+            </div>
+
+            <div class="col-2" sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/event/remove(eventId=${event.getId()})}" class="col-12">
+                    <button  type="button" class="btn btn-danger">Usuń event
+                    </button>
+                </a>
+            </div>
+
+            <div class="col-3" sec:authorize="hasRole('ADMIN')"  th:if="${event.getStatus().name() != 'PAST'}">
+                <a th:href="@{/event/toggleStatus(eventId=${event.getId()})}" class="col-12">
+                    <button type="button" class="btn btn-primary"
+                            th:text="${event.getStatus().name() != 'CURRENT' ? 'Rozpocznij' : 'Zakończ'}">
+                    </button>
+                </a>
+            </div>
+
+            <div class="col-2" sec:authorize="hasRole('ADMIN')" th:if="${event.getStatus().name() != 'PAST'}">
+                <a th:href="@{/event/edit(eventId=${event.getId()})}" class="col-12">
+                    <button  type="button" class="btn btn-primary">Edytuj JAM
+                    </button>
+                </a>
+            </div>
+
+            <div class="col-3" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
+                <a th:href="@{/event/joinEvent(eventId=${event.getId()})}" class="col-12">
+                    <button type="button" class="btn btn-primary">
+                        Dołącz
+                    </button>
+                </a>
+            </div>
+
+    </div>
+</div>
 </div>
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
 <th:block th:replace="fragments :: scripts" th:remove="tag"/>

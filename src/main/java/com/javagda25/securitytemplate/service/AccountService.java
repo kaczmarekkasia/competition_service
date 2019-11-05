@@ -73,6 +73,7 @@ public class AccountService {
 
     public Optional<Account> findById(Long accountId) {
         return accountRepository.findById(accountId);
+
     }
 
     public void resetPassword(AccountPasswordResetRequest request) {

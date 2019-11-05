@@ -1,0 +1,15 @@
+package com.javagda25.securitytemplate.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping ("/referee/")
+public class RefereeController {
+
+    @GetMapping("/")
+    public String refereePanel(){
+        return "referee-panel";
+    }
+}

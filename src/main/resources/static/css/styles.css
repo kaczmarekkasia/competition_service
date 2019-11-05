@@ -22,16 +22,16 @@
  */
 
 .site-header {
-    background-color: rgba(0, 0, 0, .85);
+    background-color: rgba(0, 73, 85, .85);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
 }
 .site-header a {
-    color: #999;
+    color: #ffffff;
     transition: ease-in-out color .15s;
 }
 .site-header a:hover {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
 }
 
@@ -108,5 +108,18 @@
 .logo{
     height : 50px;
     border-radius: 50px;
+}
+
+.container-image-text {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 

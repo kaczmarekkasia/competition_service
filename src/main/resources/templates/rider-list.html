@@ -23,33 +23,13 @@
             <div class="col-2" th:text="${rider.getUsername()}"></div>
             <div class="col-2" th:text="${rider.getCity()}"></div>
             <div class="row col-3">
-                <!--<div class="col-3">-->
-                    <!--<a th:href="@{/event/remove(eventId=${rider.getId()})}">-->
-                        <!--<button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-danger">Usuń event-->
-                        <!--</button>-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-3" th:if="${rider.getStatus().name() != 'PAST'}">-->
-                    <!--<a th:href="@{/event/toggleStatus(eventId=${rider.getId()})}">-->
-                        <!--<button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-primary"-->
-                                <!--th:text="${rider.getStatus().name() != 'CURRENT' ? 'Rozpocznij' : 'Zakończ'}">-->
-                        <!--</button>-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-3" th:if="${rider.getStatus().name() != 'PAST'}">-->
-                    <!--<a th:href="@{/event/edit(eventId=${rider.getId()})}">-->
-                        <!--<button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-primary">Edytuj JAM-->
-                        <!--</button>-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-3">-->
-                    <!--&lt;!&ndash;<a th:href="@{/admin/account/editRoles(accountId=${account.getId()})}">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary">&ndash;&gt;-->
-                    <!--&lt;!&ndash;Edit roles&ndash;&gt;-->
-                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                <!--</div>-->
-            <!--</div>-->
+                <div class="col-3">
+                    <!--TO NIE DZIAŁA!-->
+                    <a th:href="@{/event/removeRider(riderId=${rider.getId()},eventId=${event.getId()})}">
+                        <button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-danger">Usuń zawodnika
+                        </button>
+                    </a>
+                </div>
         </div>
     </div>
 </div>
