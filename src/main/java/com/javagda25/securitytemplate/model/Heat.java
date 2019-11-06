@@ -18,9 +18,15 @@ public class Heat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @OneToMany( fetch = FetchType.EAGER)
     private Set<UserComment> comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Round round;
+
+    public Heat(String name) {
+        this.name = name;
+    }
 }

@@ -15,6 +15,8 @@ public class Round {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @OneToMany( fetch = FetchType.EAGER)
     private Set<UserComment> comments;
 
@@ -25,4 +27,8 @@ public class Round {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "round", fetch = FetchType.EAGER)
     private Set<Heat> heats;
+
+    public Round(String name) {
+        this.name = name;
+    }
 }

@@ -1,41 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Fianl Woman Panel</title>
+    <title>Index page</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
-<body>
+<body style="background-color: #8c99a8">
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+<div class="container">
+    <h1>Formularz sędziego</h1>
+    <form th:action="@{/referee/finalWoman}" method="post" th:object="${rank}">
+        <!--<input type="hidden" th:field="*{id}" >-->
+
+        <div th:each="rider, index : ${ridersList}" class="row col-12 form-container">
+            <div class="row col-md-12 form-input-row">
+                <div class="col-1">Numer</div>
+                <div class="col-2">Imię</div>
+                <div class="col-3">Nazwisko</div>
+                <div class="col-3">Ksywka</div>
+                <div class="col-3">Twoja ocena</div>
+            </div>
 
 
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-    </tr>
-    </tbody>
-</table>
+            <div class="row col-md-12 form-input-row">
+                <div class="col-1" th:text="${index.index + 1}"></div>
+                <div class="col-2" th:text="${rider.getName()}"></div>
+                <div class="col-3" th:text="${rider.getSurname()}"></div>
+                <div class="col-3" th:text="${rider.getUsername()}"></div>
+                <div class="col-md-3">
+                    <select class="form-control" type="number" id="riderRank" th:name="riderRank" th:field="*{riderRankSet}">
+                        <option th:value="1">1</option>
+                        <option th:value="2">2</option>
+                        <option th:value="3">3</option>
+                        <option th:value="4">4</option>
+                    </select>
+                </div>
+            </div>
 
+
+
+            <div class="row col-md-12 form-button-row">
+                <div class="col-md-6">
+                    <button type="reset" class="btn btn-warning offset-3 col-md-6">Zresetuj</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary offset-3 col-md-6">Zapisz</button>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+
+</div>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
 </body>
-</html>
+</html>>

@@ -47,10 +47,10 @@ public class Account {
     private String city;
 //    private byte[] photo;
 
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    private Set<Rank> rankSet;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<RiderRank> riderRankSet;
 
 
     @ToString.Exclude
