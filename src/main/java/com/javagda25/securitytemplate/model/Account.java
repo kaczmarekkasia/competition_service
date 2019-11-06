@@ -45,9 +45,16 @@ public class Account {
     private String kiteBrand;
     private String team;
     private String city;
-    private byte[] photo;
-    private Integer rankNumber;
+//    private byte[] photo;
 
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    private Set<Rank> rankSet;
+
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "accounts",fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private Set<Event> events;
