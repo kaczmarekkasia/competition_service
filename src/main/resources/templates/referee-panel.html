@@ -8,7 +8,8 @@
 <body style="background-color: #8c99a8">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
-
+    <input type="hidden" th:name="${event}" th:object="${event}">
+    <h1 th:text="${event.getName()}"></h1>
 
     <table class="table table-bordered table form-container">
         <thead>
@@ -20,9 +21,9 @@
         </thead>
         <tbody>
         <tr>
-            <td><a class="text-dark" th:href="@{/event/list}">Round1</a></td>
-            <td><a class="text-dark" th:href="@{/referee/finalWoman}">Final</a></td>
-            <td><a class="text-dark" th:href="@{/event/list}">Final</a></td>
+            <td><a class="text-dark" th:href="@{/referee/Round1Man}">Round1</a></td>
+            <td><a class="text-dark" th:href="@{/referee/finalWoman(eventId=${event.getId()})}">Final</a></td>
+            <td><a class="text-dark" th:href="@{/referee/finalJunior(eventId=${event.getId()})}">Final</a></td>
         </tr>
         <tr>
             <td><a class="text-dark" th:href="@{/event/list}">Round2</a></td>

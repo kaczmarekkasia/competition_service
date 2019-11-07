@@ -59,10 +59,11 @@ public class EventService {
 
     private void creatingNewRoundsAndHeats(Event eventToEditStatus) {
         Round round1 = new Round("Round 1 MAN");
-        Round round2 = new Round("Final WOMAN");
-        Round round3 = new Round("Final JUNIOR");
+        //is it neccessary to create those rounds? (there are only one)
+//        Round finalWoman = new Round("Final WOMAN");
+//        Round finalJunior = new Round("Final JUNIOR");
 
-        Set<Round> roundSet = new HashSet<>(Arrays.asList(round1, round2, round3));
+        Set<Round> roundSet = new HashSet<>(Arrays.asList(round1));
 
         Heat heat1 = new Heat("1");
         Heat heat2 = new Heat("2");
