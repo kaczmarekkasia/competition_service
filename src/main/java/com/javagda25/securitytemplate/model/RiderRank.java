@@ -15,11 +15,15 @@ public class RiderRank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int value;
+    private String value;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "riderRankSet", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private Set<Account> accounts;
+
+    public RiderRank(String value) {
+        this.value = value;
+    }
 }

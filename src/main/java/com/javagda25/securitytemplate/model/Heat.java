@@ -1,9 +1,7 @@
 package com.javagda25.securitytemplate.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,11 +18,20 @@ public class Heat {
 
     private String name;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany( fetch = FetchType.EAGER)
     private Set<UserComment> comments;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private Round round;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Account> riders;
 
     public Heat(String name) {
         this.name = name;

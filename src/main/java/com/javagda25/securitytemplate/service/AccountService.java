@@ -1,9 +1,6 @@
 package com.javagda25.securitytemplate.service;
 
-import com.javagda25.securitytemplate.model.Account;
-import com.javagda25.securitytemplate.model.AccountRole;
-import com.javagda25.securitytemplate.model.RiderType;
-import com.javagda25.securitytemplate.model.Stance;
+import com.javagda25.securitytemplate.model.*;
 import com.javagda25.securitytemplate.model.dto.AccountPasswordResetRequest;
 import com.javagda25.securitytemplate.repository.AccountRepository;
 import com.javagda25.securitytemplate.repository.AccountRoleRepository;
@@ -142,5 +139,27 @@ public class AccountService {
             return accountRepository.findAccountsByAccountRolesContains(optionalAccountRole.get());
         }
         throw new EntityNotFoundException();
+    }
+
+    public void setRidersRank(HttpServletRequest request) {
+        Map<String, String[]> formParameters = request.getParameterMap();
+
+        for (String riderIdRank : formParameters.keySet()) {
+            if (!riderIdRank.contains("_")) {
+                continue;
+            }
+            String id = riderIdRank.split("_")[1];
+            Long riderId = Long.parseLong(id);
+
+            Optional<Account> optionalRider = findById(riderId);
+            if (optionalRider.isPresent()) {
+                Account rider = optionalRider.get();
+                String rankValue = formParameters.get(riderIdRank)[0];
+                RiderRank rank = new RiderRank(rankValue);
+                rider.getRiderRankSet().add(rank);
+
+                accountRepository.save(rider);
+            } else throw new EntityNotFoundException();
+        }
     }
 }
