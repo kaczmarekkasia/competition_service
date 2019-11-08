@@ -1,32 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Index page</title>
     <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
-<body style="background-color: #8c99a8">
+<body style="background-color: #606569">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
 
 
     <div class="container-image-text">
-        <img th:src="@{/images/tlo.jpg}" height="960" width="960" alt="bkwj" style="width:100%;"/>
+        <img th:src="@{/images/main_page_photo.jpg}" height="300" width="300" alt="bkwj" style="width:100%;" class="img-fluid"/>
         <div class="centered">
-            <h2 class="display-4 font-weight-normal">Baltic Kite Wave Jam</h2>
-            <p class="lead font-weight-normal">
-                Baltic Kite Wave Jam to coroczne zawody w pływaniu na fali z latawcem (tzw kitewave lub strapless kitesurfing).
-                Organizowane przez grupę entuzjaztów, głównie z zachodniego wybrzeża polskiego Bałtyku.
-                Jest to jedyna tego typu impreza w Polsce i ma charakter luźnego jam session z nagrodami i wyróżnieniami.
-                Niektórzy określają ją nieoficjalnymi mistrzostwami Polski w tej dziedzinie. Nam daleko do takiego nazewnictwa,
-                bardziej skupiamy się na dobrej zabawie i scalaniu środowiska tej stosunkowo młodej i mało znanej odmiany kitesurfingu.
-                ALOHA!
-            </p>
-            <a class="btn btn-outline-secondary" th:href="@{/event/list}">Nasze JAMy</a>
-
+            <h2 class="display-4 font-weight-normal main-title" >Baltic Kite Wave Jam</h2>
         </div>
     </div>
 
+    <div class="container my-5 py-5 z-depth-1">
+
+        <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4 mb-md-0">
+
+                    <h3 class="font-weight-bold nav-sign">Witaj!</h3>
+
+                    <p class="nav-sign text-white">Baltic Kite Wave Jam to coroczne zawody w pływaniu na fali z latawcem (tzw kitewave lub strapless kitesurfing).
+                        Jest to jedyna tego typu impreza w Polsce i ma charakter luźnego jam session z nagrodami i wyróżnieniami.
+                        Niektórzy określają ją nieoficjalnymi mistrzostwami Polski w tej dziedzinie. Nam daleko do takiego nazewnictwa,
+                        bardziej skupiamy się na dobrej zabawie i scalaniu środowiska tej stosunkowo młodej i mało znanej odmiany kitesurfingu.
+                        ALOHA!</p>
+
+                    <a class="btn btn-outline-elegant nav-sign" sec:authorize="!isAuthenticated()" th:href="@{/user/register}">Dołącz do nas!</a>
+
+                </div>
+
+                <div class="col-md-6 mb-4 mb-md-0 text-center">
+
+                        <img th:src="@{/images/logo_bkwj.jpg}" style="width: 200px; margin-top: 50px" class="img-fluid "/>
+
+                </div>
+
+            </div>
+
+        </section>
+        <!--Section: Content-->
+
+
+    </div>
 </div>
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
 <th:block th:replace="fragments :: scripts" th:remove="tag"/>

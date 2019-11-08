@@ -45,12 +45,13 @@ public class EventService {
             Event eventToEditStatus = eventRepository.findById(eventId).get();
             switch (eventToEditStatus.getStatus()) {
                 case PLANNED:
+//                    tworzące się rundy i heaty nie przypisują się do eventu
+                    creatingEventRounds(eventToEditStatus);
                     eventToEditStatus.setStatus(EventStatus.CURRENT);
                     eventRepository.save(eventToEditStatus);
                     break;
                 case CURRENT:
                     eventToEditStatus.setStatus(EventStatus.PAST);
-                    creatingEventRounds(eventToEditStatus);
                     eventRepository.save(eventToEditStatus);
                     break;
                 default:
@@ -86,7 +87,7 @@ public class EventService {
 
         Set<Heat> heatSet = new HashSet<>();
 
-        int x = 0;
+        int x=0;
 
         if (((ridersSet.size() / 4) * 100) % 100 == 0) {
             x = ridersSet.size() / 4;
@@ -95,7 +96,7 @@ public class EventService {
             x = ridersSet.size() / 4 + 1;
         }
 
-        for (int i = 0; i < x; i++) {
+        for (int i = 0; i < 4; i++) {
             Heat heat = new Heat(String.valueOf(i + 1));
             heatRepository.save(heat);
             heatSet.add(heat);
