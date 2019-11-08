@@ -46,9 +46,9 @@ public class EventService {
             switch (eventToEditStatus.getStatus()) {
                 case PLANNED:
 //                    tworzące się rundy i heaty nie przypisują się do eventu
-                    creatingEventRounds(eventToEditStatus);
                     eventToEditStatus.setStatus(EventStatus.CURRENT);
                     eventRepository.save(eventToEditStatus);
+                    creatingEventRounds(eventToEditStatus);
                     break;
                 case CURRENT:
                     eventToEditStatus.setStatus(EventStatus.PAST);
@@ -68,36 +68,36 @@ public class EventService {
 
         Set<Round> roundSet = new HashSet<>(Arrays.asList(round1, finalWoman, finalJunior));
 
-        round1.setHeats(creatingEventHeats(eventToEditStatus, RiderType.MAN));
+        round1.setEvent(eventToEditStatus);
         roundRepository.save(round1);
+        round1.setHeats(creatingEventHeats(eventToEditStatus, RiderType.MAN, round1));
 
-        finalWoman.setHeats(creatingEventHeats(eventToEditStatus, RiderType.WOMAN));
+        finalWoman.setEvent(eventToEditStatus);
         roundRepository.save(finalWoman);
+        finalWoman.setHeats(creatingEventHeats(eventToEditStatus, RiderType.WOMAN, finalWoman));
 
-        finalJunior.setHeats(creatingEventHeats(eventToEditStatus, RiderType.JUNIOR));
+        finalJunior.setEvent(eventToEditStatus);
         roundRepository.save(finalJunior);
+        finalJunior.setHeats(creatingEventHeats(eventToEditStatus, RiderType.JUNIOR, finalJunior));
 
         eventToEditStatus.setRounds(roundSet);
     }
 
-    private Set<Heat> creatingEventHeats(Event eventToEditStatus, RiderType riderType) {
+    private Set<Heat> creatingEventHeats(Event eventToEditStatus, RiderType riderType, Round round) {
         Set<Account> ridersSet = eventToEditStatus.getAccounts().stream()
                 .filter(account -> account.getRiderType().equals(riderType))
                 .collect(Collectors.toSet());
 
         Set<Heat> heatSet = new HashSet<>();
 
-        int x=0;
+        int x = 0;
 
-        if (((ridersSet.size() / 4) * 100) % 100 == 0) {
-            x = ridersSet.size() / 4;
-        }
-        if (((ridersSet.size() / 4) * 100) % 100 > 0) {
-            x = ridersSet.size() / 4 + 1;
-        }
+        x = (int) Math.ceil(ridersSet.size() / 4.0);
 
-        for (int i = 0; i < 4; i++) {
-            Heat heat = new Heat(String.valueOf(i + 1));
+// to nie działa! x zawsze 0!
+        for (int i = 0; i < x; i++) {
+            Heat heat = new Heat(eventToEditStatus.getId() + String.valueOf(i + 1) + "_" + riderType);
+            heat.setRound(round);
             heatRepository.save(heat);
             heatSet.add(heat);
         }

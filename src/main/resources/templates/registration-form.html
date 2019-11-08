@@ -8,46 +8,64 @@
 <body style="background-color: #606569">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 <div class="container">
-    <h1>Registration form</h1>
-    <form th:action="@{/user/register}" method="post" th:object="${newAccount}">
-        <div class="row col-12 form-container">
-            <div th:if="${errorMessage != null}" class="row col-md-12 form-input-row">
-                <div class="col-md-12 alert alert-danger" th:text="${errorMessage}"></div>
-            </div>
-            <div class="row col-md-12 form-input-row">
-                <div class="col-md-6">
-                    <label for="username">Username:</label>
+
+    <!-- Default form register -->
+    <form class="text-center border border-light p-5" th:action="@{/user/register}" method="post" th:object="${newAccount}">
+
+        <p class="h4 mb-4">Zarejestruj się</p>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <div th:if="${errorMessage != null}" class="row col-md-12 form-input-row">
+                    <div class="col-md-12 alert alert-danger" th:text="${errorMessage}"></div>
                 </div>
-                <div class="col-md-6">
-                    <input class="form-control" type="text" id="username" th:field="*{username}">
+                <!-- First name -->
+
+
+            <div class="form-row mb-4">
+                <div class="col">
+                    <!-- First name -->
+                    <input class="form-control" type="text" id="name" th:field="*{name}" placeholder="Imię">
                 </div>
-            </div>
-            <div class="row col-md-12 form-input-row">
-                <div class="col-md-6">
-                    <label for="password">Password:</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" type="password" id="password" th:field="*{password}">
-                </div>
-            </div>
-            <div class="row col-md-12 form-input-row">
-                <div class="col-md-6">
-                    <label for="password-confirm">Password confirm:</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" type="password" id="password-confirm" th:name="passwordConfirm">
+                <div class="col">
+                    <!-- Last name -->
+                    <input class="form-control" type="text" id="surname" th:field="*{surname}" placeholder="Nazwisko">
                 </div>
             </div>
-            <div class="row col-md-12 form-button-row">
-                <div class="col-md-6">
-                    <button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>
+
+
+
+
+        <!-- E-mail -->
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <input class="form-control" type="text" id="username" th:field="*{username}" placeholder="Nazwa_użytkownika">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary offset-3 col-md-6">Submit</button>
+        <!-- Password -->
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <input class="form-control" type="password" id="password" th:field="*{password}" placeholder="Hasło">
+                    </div>
                 </div>
+
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <input class="form-control" type="password" id="password-confirm" th:name="passwordConfirm" placeholder="Potwierdź hasło">
+                    </div>
+                </div>
+
+
+
+        <!-- Sign up button -->
+        <button class="btn btn-info my-4 btn-block" type="submit">Zapisz</button>
+
             </div>
-        </div>
+
+
     </form>
+</div>
+    <!-- Default form register -->
 </div>
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
 <th:block th:replace="fragments :: scripts" th:remove="tag"/>
