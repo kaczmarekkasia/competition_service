@@ -33,7 +33,19 @@ public class Heat {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Account> riders;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<RiderRank> rankSet;
+
+
+    private Boolean isFullOfRiders = false;
+
     public Heat(String name) {
         this.name = name;
+    }
+
+    public void setHeatAsFullOfRiders(){
+        isFullOfRiders = true;
     }
 }

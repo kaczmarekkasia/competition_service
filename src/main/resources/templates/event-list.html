@@ -8,10 +8,9 @@
 <body style="background-color: #606569">
 <th:block th:replace="fragments :: navigator" th:remove="tag"/>
 
+<h1 class="nav-sign" style="text-align: center" >Lista JAMów</h1>
+
 <div class="container">
-        <div class="row col-md-12" >
-            <h1>Lista JAMów</h1>
-        </div>
         <div class="row col-md-12">
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/event/add}" class="col-12">
                 <button type="button" class="btn btn-primary">
@@ -23,11 +22,11 @@
 
 
 <div class="container">
-        <div class="row col-md-12 list-header-row">
-            <div class="col-3"><h2>Nazwa</h2></div>
-            <div class="col-3"><h2>Data</h2></div>
-            <div class="col-3"><h2>Status</h2></div>
-            <div class="col-3"><h2>Lokalizacja</h2></div>
+        <div class="row col-md-12 list-header-row nav-sign" style="text-align: center">
+            <div class="col-3 "><h2>Nazwa</h2></div>
+            <div class="col-3 "><h2>Data</h2></div>
+            <div class="col-3 "><h2>Status</h2></div>
+            <div class="col-3 "><h2>Lokalizacja</h2></div>
         </div>
     </div>
 </div>
@@ -35,7 +34,7 @@
 <div class="container" th:each="event : ${eventList}">
 
     <div class="row col-md-12">
-        <div  class="row col-md-12 list-data-row">
+        <div  class="row col-md-12 list-text">
             <div class="col-3" th:text="${event.getName()}"></div>
             <div class="col-3" th:text="${event.getDate()}"></div>
             <div class="col-3" th:text="${event.getStatus()}"></div>
@@ -54,7 +53,15 @@
                 </a>
             </div>
 
-            <div class="col-2" th:if="${event.getStatus().name() != 'PAST'}" sec:authorize="hasRole('REFEREE')" >
+            <div class="col-2" th:if="${event.getStatus().name() == 'CURRENT'} " sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/round/list(eventId=${event.getId()})}" class="col-12">
+                    <button type="button" class="btn btn-primary">
+                        Losowanie heatów
+                    </button>
+                </a>
+            </div>
+
+            <div class="col-2" th:if="${event.getStatus().name() == 'CURRENT'} " sec:authorize="hasRole('REFEREE')" >
                 <a th:href="@{/referee/startPage(eventId=${event.getId()})}" class="col-12">
                     <button type="button" class="btn btn-primary">
                         Panel sędziowski
@@ -62,7 +69,7 @@
                 </a>
             </div>
 
-            <div class="col-2" sec:authorize="hasRole('ADMIN')">
+            <div class="col-1" sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{/event/remove(eventId=${event.getId()})}" class="col-12">
                     <button  type="button" class="btn btn-danger">Usuń event
                     </button>
@@ -84,7 +91,7 @@
                 </a>
             </div>
 
-            <div class="col-2" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
+            <div class="col-1" sec:authorize="!hasRole('ADMIN')" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
                 <a th:href="@{/event/joinEvent(eventId=${event.getId()})}" class="col-12">
                     <button type="button" class="btn btn-primary">
                         Dołącz

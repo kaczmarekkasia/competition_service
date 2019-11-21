@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+    <meta charset="UTF-8">
+    <title>Lista rund</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body style="background-color: #606569">
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+
+<h1 class="nav-sign" style="text-align: center" th:text="'Lista rund ' + ${event.getName()}" ></h1>
+
+
+
+
+<div class="container list-text" th:each="round : ${eventRoundsSet}">
+    <input type="hidden" th:type="hidden" th:name="eventId" th:value="${eventId}">
+
+    <a th:href="@{/heat/setRiders(roundId=${round.getId()})}" th:text="${round.getName()}"></a>
+
+</div>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>

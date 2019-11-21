@@ -23,6 +23,10 @@ public class RiderRank {
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private Set<Account> accounts;
 
+    @ManyToMany(mappedBy = "refereeRankSet", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
+    private Set<Account> refereeAccounts;
+
     public RiderRank(String value) {
         this.value = value;
     }

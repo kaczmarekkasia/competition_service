@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formularz dodawania zawodników do heatów</title>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
+</head>
+<body style="background-color: #606569">
+<th:block th:replace="fragments :: navigator" th:remove="tag"/>
+<div class="container">
+    <h1 class="nav-sign" style="text-align: center" th:text="'Dodaj zawodników do ' + ${round.getName()}" ></h1>
+
+    <div th:each="heat, index : ${roundHeatSet}">
+        <h3 th:text="${heat.getName()}"></h3>
+    <form th:action="@{/heat/setRiders}" method="post" th:object="${heat}">
+        <input type="hidden" th:type="hidden" th:name="roundId" th:value="${roundId}">
+        <div class="row col-md-5 form-container">
+            <div class="row col-md-12 form-input-row">
+                <div class="col-md-2">#</div>
+                <div class="col-md-10">Zawodnik</div>
+            </div>
+
+<!--todo wymyśl IFa który wczyta inny set w zależności od RiderType-->
+            <div  th:each="i: ${#numbers.sequence(0, 3)}"  class="row col-md-12 form-input-row">
+                <div class="col-md-2" th:text="${i + 1}"></div>
+
+                <div class="col-md-10" th:switch="${round.getName()}">
+                    <span th:case="'Round 1 MAN'">
+                        <select th:name="${'riderId_' + heat.getId()}" id="riderId" class="form-control col-md-12">
+                            <option th:each="rider : ${manRiders}"
+                                    th:text="${rider.getUsername()}"
+                                    th:value="${rider.getId()}">
+                            </option>
+                        </select>
+                    </span>
+
+                    <span th:case="'Final WOMAN'">
+                        <select th:name="riderId" id="riderId" class="form-control col-md-12">
+                            <option th:each="rider : ${womanRiders}"
+                                    th:text="${rider.getUsername()}"
+                                    th:value="${rider.getId()}">
+                            </option>
+                        </select>
+                    </span>
+
+                    <span th:case="'Final JUNIOR'">
+                        <select th:name="riderId" id="riderId" class="form-control col-md-12">
+                            <option th:each="rider : ${juniorRiders}"
+                                    th:text="${rider.getUsername()}"
+                                    th:value="${rider.getId()}">
+                            </option>
+                        </select>
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="row col-md-12 form-button-row">
+                <div class="col-md-5">
+                    <button type="reset" class="btn btn-warning offset-3 col-md-12">Zresetuj</button>
+                </div>
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-primary offset-3 col-md-12">Zapisz</button>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+    </div>
+
+</div>
+<th:block th:replace="fragments :: footer" th:remove="tag"/>
+<th:block th:replace="fragments :: scripts" th:remove="tag"/>
+</body>
+</html>

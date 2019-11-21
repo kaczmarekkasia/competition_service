@@ -15,6 +15,7 @@
 
     <form th:action="@{/referee/finalWoman}" method="post" th:object="${rank}">
         <input type="hidden" th:type="hidden" th:name="eventId" th:value="${eventId}">
+        <input type="hidden" th:type="hidden" th:name="roundId" th:value="${roundId}">
         <div class="row col-md-4 form-container">
             <div class="row col-md-12 form-input-row">
                 <div class="col-md-2">#</div>
@@ -29,7 +30,7 @@
                 <div class="col-md-3" th:text="${rider.getName()}"></div>
                 <div class="col-md-3" th:text="${rider.getSurname()}"></div>
                 <div class="col-md-4">
-                    <select class="form-control" type="number" id="riderRank" th:name="${'rank_'+rider.getId()}">
+                    <select class="form-control" type="number" id="riderRank" th:name="${'rank_'+ rider.getId()}">
                         <option th:value="1">1</option>
                         <option th:value="2">2</option>
                         <option th:value="3">3</option>

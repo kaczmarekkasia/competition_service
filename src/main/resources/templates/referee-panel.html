@@ -22,7 +22,7 @@
         <tbody>
         <tr>
             <td><a class="text-dark" th:href="@{/referee/Round1Man}">Round1</a></td>
-            <td><a class="text-dark" th:href="@{/referee/finalWoman(eventId=${event.getId()})}">Final</a></td>
+            <td><a class="text-dark" th:href="@{/referee/finalWoman(eventId=${event.getId()}, roundId=${event.getRounds()})}">Final</a></td>
             <td><a class="text-dark" th:href="@{/referee/finalJunior(eventId=${event.getId()})}">Final</a></td>
         </tr>
         <tr>

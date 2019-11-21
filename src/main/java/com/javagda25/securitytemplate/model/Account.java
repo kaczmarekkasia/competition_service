@@ -52,6 +52,11 @@ public class Account {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<RiderRank> riderRankSet;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<RiderRank> refereeRankSet;
+
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

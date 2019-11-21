@@ -40,12 +40,14 @@ public class EventService {
         eventRepository.deleteById(eventId);
     }
 
+    /**
+     * change event status
+     */
     public void toggleStatus(Long eventId) {
         if (eventRepository.existsById(eventId)) {
             Event eventToEditStatus = eventRepository.findById(eventId).get();
             switch (eventToEditStatus.getStatus()) {
                 case PLANNED:
-//                    tworzące się rundy i heaty nie przypisują się do eventu
                     eventToEditStatus.setStatus(EventStatus.CURRENT);
                     eventRepository.save(eventToEditStatus);
                     creatingEventRounds(eventToEditStatus);
@@ -60,43 +62,50 @@ public class EventService {
         }
     }
 
+    /**
+     * By changing the Event status from CURRENT to PLANNED this method creates Rounds for three groups:
+     * MAN - Round 1 which is starting the jam
+     * WOMAN and MAN - just finals, becouse there is no more than 4 riders
+     */
     private void creatingEventRounds(Event eventToEditStatus) {
 
-        Round round1 = new Round("Round 1 MAN");
+        Round round1_man = new Round("Round 1 MAN");
         Round finalWoman = new Round("Final WOMAN");
         Round finalJunior = new Round("Final JUNIOR");
 
-        Set<Round> roundSet = new HashSet<>(Arrays.asList(round1, finalWoman, finalJunior));
+        Set<Round> roundSet = new HashSet<>(Arrays.asList(round1_man, finalWoman, finalJunior));
 
-        round1.setEvent(eventToEditStatus);
-        roundRepository.save(round1);
-        round1.setHeats(creatingEventHeats(eventToEditStatus, RiderType.MAN, round1));
+        round1_man.setEvent(eventToEditStatus);
+        roundRepository.save(round1_man);
+        round1_man.setHeats(creatingRoundHeats(eventToEditStatus, RiderType.MAN, round1_man));
 
         finalWoman.setEvent(eventToEditStatus);
         roundRepository.save(finalWoman);
-        finalWoman.setHeats(creatingEventHeats(eventToEditStatus, RiderType.WOMAN, finalWoman));
+        finalWoman.setHeats(creatingRoundHeats(eventToEditStatus, RiderType.WOMAN, finalWoman));
 
         finalJunior.setEvent(eventToEditStatus);
         roundRepository.save(finalJunior);
-        finalJunior.setHeats(creatingEventHeats(eventToEditStatus, RiderType.JUNIOR, finalJunior));
+        finalJunior.setHeats(creatingRoundHeats(eventToEditStatus, RiderType.JUNIOR, finalJunior));
 
         eventToEditStatus.setRounds(roundSet);
     }
 
-    private Set<Heat> creatingEventHeats(Event eventToEditStatus, RiderType riderType, Round round) {
+    /**
+     * Based on number of riders creates heats to each round; one heat takes four riders
+     */
+    private Set<Heat> creatingRoundHeats(Event eventToEditStatus, RiderType riderType, Round round) {
         Set<Account> ridersSet = eventToEditStatus.getAccounts().stream()
                 .filter(account -> account.getRiderType().equals(riderType))
                 .collect(Collectors.toSet());
 
         Set<Heat> heatSet = new HashSet<>();
 
-        int x = 0;
+        int x;
 
         x = (int) Math.ceil(ridersSet.size() / 4.0);
 
-// to nie działa! x zawsze 0!
         for (int i = 0; i < x; i++) {
-            Heat heat = new Heat(eventToEditStatus.getId() + String.valueOf(i + 1) + "_" + riderType);
+            Heat heat = new Heat(eventToEditStatus.getId() + "_Heat_" + (i + 1) + "_" + riderType);
             heat.setRound(round);
             heatRepository.save(heat);
             heatSet.add(heat);

@@ -132,6 +132,21 @@
 }
 
 .nav-sign{
+     font-family: Trebuchet MS, sans-serif;
+ }
+
+.list-nav{
     font-family: Trebuchet MS, sans-serif;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 20px;
 }
+
+.list-text{
+    font-family: Trebuchet MS, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
 

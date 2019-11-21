@@ -31,4 +31,16 @@ public class Round {
     public Round(String name) {
         this.name = name;
     }
+
+    /**
+     * provides information about heat rider status*/
+    public Boolean areRidersSetToHeats(){
+        Long heatsStatus = heats.stream()
+                .filter(heat -> heat.getIsFullOfRiders().equals(false))
+                .count();
+        if(heatsStatus > 0) {
+            return false;
+        }
+        return true;
+    }
 }

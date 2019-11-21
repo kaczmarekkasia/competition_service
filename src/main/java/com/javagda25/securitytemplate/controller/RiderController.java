@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/rider/")
@@ -49,6 +51,22 @@ public class RiderController {
 
         model.addAttribute("ridersList", event.getAccounts());
         return "rider-list";
+    }
+
+    @GetMapping("/info")
+    public String riderInfo(Model model, @RequestParam(name = "riderId") Long riderId,
+                            @RequestParam(name = "eventId") Long eventId){
+        Optional<Account> optionalAccount = accountService.findById(riderId);
+        Event event = eventService.findById(eventId);
+        if (optionalAccount.isPresent()){
+            Account rider = optionalAccount.get();
+            model.addAttribute("rider", rider);
+            model.addAttribute("event", event);
+
+            return "rider-info";
+        }
+        throw new EntityNotFoundException();
+
     }
 
 }

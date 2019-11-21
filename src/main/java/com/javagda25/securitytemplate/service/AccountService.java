@@ -4,6 +4,7 @@ import com.javagda25.securitytemplate.model.*;
 import com.javagda25.securitytemplate.model.dto.AccountPasswordResetRequest;
 import com.javagda25.securitytemplate.repository.AccountRepository;
 import com.javagda25.securitytemplate.repository.AccountRoleRepository;
+import com.javagda25.securitytemplate.repository.RiderRankRepository;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -21,14 +23,19 @@ public class AccountService {
     private PasswordEncoder passwordEncoder;
     private AccountRoleService accountRoleService;
     private AccountRoleRepository accountRoleRepository;
+    private RiderRankRepository riderRankRepository;
+
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, AccountRoleService accountRoleService, AccountRoleRepository accountRoleRepository) {
+    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, AccountRoleService accountRoleService, AccountRoleRepository accountRoleRepository, RiderRankRepository riderRankRepository) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
         this.accountRoleService = accountRoleService;
         this.accountRoleRepository = accountRoleRepository;
+        this.riderRankRepository = riderRankRepository;
     }
+
+
 
     public boolean register(Account account) {
         if (accountRepository.existsByUsername(account.getUsername())) {
@@ -141,7 +148,7 @@ public class AccountService {
         throw new EntityNotFoundException();
     }
 
-    public void setRidersRank(HttpServletRequest request) {
+    public void setRidersRank(HttpServletRequest request, Event event, Account referee) {
         Map<String, String[]> formParameters = request.getParameterMap();
 
         for (String riderIdRank : formParameters.keySet()) {
@@ -156,10 +163,21 @@ public class AccountService {
                 Account rider = optionalRider.get();
                 String rankValue = formParameters.get(riderIdRank)[0];
                 RiderRank rank = new RiderRank(rankValue);
+//                saving new rank
+                riderRankRepository.save(rank);
+//                 adding the rank to the rider
                 rider.getRiderRankSet().add(rank);
-
+//                saving rider with a new rank
                 accountRepository.save(rider);
+//                adding rank to the heat
+//                event.getRounds().
             } else throw new EntityNotFoundException();
         }
+    }
+
+    public Set<Account> ridersByRiderType (RiderType riderType, Round round){
+        return round.getEvent().getAccounts().stream()
+                .filter(account -> account.getRiderType().equals(riderType))
+                .collect(Collectors.toSet());
     }
 }
