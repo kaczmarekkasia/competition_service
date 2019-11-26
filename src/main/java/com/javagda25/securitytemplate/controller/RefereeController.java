@@ -75,7 +75,7 @@ public class RefereeController {
     }
 
     @PostMapping("/finalWoman")
-    public String finalWomanPanel(Model model, Long eventId, HttpServletRequest request, Principal principal) {
+    public String finalWomanPanel(Model model,  HttpServletRequest request, Principal principal, Long eventId) {
         Event event = eventService.findById(eventId);
         Optional<Account> optionalAccount = accountRepository.findByUsername(principal.getName());
         if (optionalAccount.isPresent()) {

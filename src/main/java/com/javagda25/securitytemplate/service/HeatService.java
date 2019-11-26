@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class HeatService {
@@ -21,16 +26,40 @@ public class HeatService {
         this.accountRepository = accountRepository;
     }
 
-    public void save(Heat heat, Long riderId) {
-        if(accountRepository.existsById(riderId)){
-            Account rider = accountRepository.getOne(riderId);
+    public void save(HttpServletRequest request, Long heatId) {
+        Map<String, String[]> formParameters = request.getParameterMap();
 
-            heat.getRiders().add(rider);
+        for (Map.Entry<String, String[]> entry : formParameters.entrySet()) {
+            if (entry.getKey().contains("_")){
+                String[] riders_id = entry.getValue();
 
-            heatRepository.save(heat);
+                for (String id : riders_id) {
+                    Long riderId = Long.parseLong(id);
+                    Optional<Account> optionalRider = accountRepository.findById(riderId);
+                    if (optionalRider.isPresent()) {
+                        Account rider = optionalRider.get();
+                        Set<Account> riderSet = new HashSet<>();
+                        riderSet.add(rider);
 
+                        Optional<Heat> optionalHeat = findById(heatId);
+
+                        if (optionalHeat.isPresent()) {
+                            Heat heat = optionalHeat.get();
+
+                            for (Account r : riderSet) {
+                                heat.getRiders().add(r);
+                            }
+
+                            heatRepository.save(heat);
+                        }
+                    }else throw new EntityNotFoundException();
+
+                }
+            }
         }
-        throw new EntityNotFoundException();
-
     }
-}
+
+        private Optional<Heat> findById (Long heatId){
+            return heatRepository.findById(heatId);
+        }
+    }

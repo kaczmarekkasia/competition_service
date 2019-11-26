@@ -63,8 +63,8 @@ public class HeatController {
     }
 
     @PostMapping("/setRiders")
-    public String setRidersToHeats(Heat heat, Long riderId) {
-        heatService.save(heat, riderId);
+    public String setRidersToHeats(HttpServletRequest request, Long heatId) {
+        heatService.save(request, heatId);
 
 //        todo na co ma iść przekierowanie???
         return "index";

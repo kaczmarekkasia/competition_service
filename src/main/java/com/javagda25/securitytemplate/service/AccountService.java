@@ -169,11 +169,12 @@ public class AccountService {
                 rider.getRiderRankSet().add(rank);
 //                saving rider with a new rank
                 accountRepository.save(rider);
-//                adding rank to the heat
+//               todo: ????? adding rank to the heat
 //                event.getRounds().
             } else throw new EntityNotFoundException();
         }
     }
+
 
     public Set<Account> ridersByRiderType (RiderType riderType, Round round){
         return round.getEvent().getAccounts().stream()
