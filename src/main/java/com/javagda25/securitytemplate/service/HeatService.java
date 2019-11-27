@@ -49,7 +49,7 @@ public class HeatService {
                             for (Account r : riderSet) {
                                 heat.getRiders().add(r);
                             }
-
+                            heat.setHeatAsFullOfRiders();
                             heatRepository.save(heat);
                         }
                     }else throw new EntityNotFoundException();
