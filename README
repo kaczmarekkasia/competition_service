@@ -1,0 +1,5 @@
+Aplikacja webowa, tworzona celem obsługi corocznych zawodów kitesurfing’owych “Baltic Kite Wave Jam”. Serwis ma umożliwiać: tworzenie wydarzeń i ich archiwizację, rejestrację sędziów, zawodników, kibiców i użytkowników, oraz prowadzenie rozgrywek online.
+Serwis ma na celu zautomatyzowanie oceny zawodników, udostępnienie zawodnikom aktualnego stanu ocen i zwiększenie świadomości publiki co do przebiegu zawodów.
+Projekt jest w fazie rozwoju.
+Użyte technologie: Java, Spring, MySQL, Thymeleaf, HTML
+Twórca: Katarzyna Kaczmarek

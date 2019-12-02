@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.javagda25</groupId>
-    <artifactId>securitytemplate</artifactId>
+    <artifactId>competition_service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>securitytemplate</name>
+    <name>competition_service</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

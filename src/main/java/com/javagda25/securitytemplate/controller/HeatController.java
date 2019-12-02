@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping(path = "/heat")
