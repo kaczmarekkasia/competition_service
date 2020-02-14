@@ -40,9 +40,10 @@ public class Event {
     private Set<Round> rounds;
 
 
-    public Event(String name, LocalDate date, EventStatus status) {
+    public Event(String name, LocalDate date, String localization, EventStatus status) {
         this.name = name;
         this.date = date;
+        this.localization = localization;
         this.status = status;
     }
 }
