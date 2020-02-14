@@ -48,9 +48,12 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 //      added for tests only
 //      events
         addTestEvent("EVENT_1", LocalDate.of(2020, 9,30), "Ustka", EventStatus.PLANNED);
-        addTestEvent("EVENT_2", LocalDate.of(2019, 9,30), "Władysławowo", EventStatus.CURRENT);
+        addTestEvent("EVENT_2", LocalDate.of(2019, 9,30), "Władysławowo", EventStatus.PLANNED);
         addTestEvent("EVENT_3", LocalDate.of(2016, 9,30), "Darłowo", EventStatus.PAST);
-//       riders: 3 woman, 3 junior, 13 man -> for 4 by heat)
+//       riders: 3 woman, 3 junior, 13 man -> for 4 by heat); 1 referee
+        addDefaultUser("referee", "referee", "USER", "REFEREE");
+
+
         addDefaultUser("rider1", "rider1", "USER", "RIDER");
         addDefaultUser("rider2", "rider2", "USER", "RIDER");
         addDefaultUser("rider3", "rider3", "USER", "RIDER");
@@ -95,6 +98,67 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         addTestRider("rider18", "S", RiderType.MAN, Stance.GOOFY, "wss", "ws", "Gdynia");
         addTestRider("rider19", "S", RiderType.MAN, Stance.GOOFY, "wss", "ws", "Gdynia");
 
+//        adding users to events for tests
+        addUserToEventForTest("EVENT_1", "rider1");
+        addUserToEventForTest("EVENT_1", "rider2");
+        addUserToEventForTest("EVENT_1", "rider3");
+        addUserToEventForTest("EVENT_1", "rider4");
+        addUserToEventForTest("EVENT_1", "rider5");
+        addUserToEventForTest("EVENT_1", "rider6");
+        addUserToEventForTest("EVENT_1", "rider7");
+        addUserToEventForTest("EVENT_1", "rider8");
+        addUserToEventForTest("EVENT_1", "rider9");
+        addUserToEventForTest("EVENT_1", "rider10");
+        addUserToEventForTest("EVENT_1", "rider11");
+        addUserToEventForTest("EVENT_1", "rider12");
+        addUserToEventForTest("EVENT_1", "rider13");
+        addUserToEventForTest("EVENT_1", "rider14");
+        addUserToEventForTest("EVENT_1", "rider15");
+        addUserToEventForTest("EVENT_1", "rider16");
+        addUserToEventForTest("EVENT_1", "rider17");
+        addUserToEventForTest("EVENT_1", "rider18");
+        addUserToEventForTest("EVENT_1", "rider19");
+
+        addUserToEventForTest("EVENT_2", "rider1");
+        addUserToEventForTest("EVENT_2", "rider2");
+        addUserToEventForTest("EVENT_2", "rider3");
+        addUserToEventForTest("EVENT_2", "rider4");
+        addUserToEventForTest("EVENT_2", "rider5");
+        addUserToEventForTest("EVENT_2", "rider6");
+        addUserToEventForTest("EVENT_2", "rider7");
+        addUserToEventForTest("EVENT_2", "rider8");
+        addUserToEventForTest("EVENT_2", "rider9");
+        addUserToEventForTest("EVENT_2", "rider10");
+        addUserToEventForTest("EVENT_2", "rider11");
+        addUserToEventForTest("EVENT_2", "rider12");
+        addUserToEventForTest("EVENT_2", "rider13");
+        addUserToEventForTest("EVENT_2", "rider14");
+        addUserToEventForTest("EVENT_2", "rider15");
+        addUserToEventForTest("EVENT_2", "rider16");
+        addUserToEventForTest("EVENT_2", "rider17");
+        addUserToEventForTest("EVENT_2", "rider18");
+        addUserToEventForTest("EVENT_2", "rider19");
+
+        addUserToEventForTest("EVENT_3", "rider1");
+        addUserToEventForTest("EVENT_3", "rider2");
+        addUserToEventForTest("EVENT_3", "rider3");
+        addUserToEventForTest("EVENT_3", "rider4");
+        addUserToEventForTest("EVENT_3", "rider5");
+        addUserToEventForTest("EVENT_3", "rider6");
+        addUserToEventForTest("EVENT_3", "rider7");
+        addUserToEventForTest("EVENT_3", "rider8");
+        addUserToEventForTest("EVENT_3", "rider9");
+        addUserToEventForTest("EVENT_3", "rider10");
+        addUserToEventForTest("EVENT_3", "rider11");
+        addUserToEventForTest("EVENT_3", "rider12");
+        addUserToEventForTest("EVENT_3", "rider13");
+        addUserToEventForTest("EVENT_3", "rider14");
+        addUserToEventForTest("EVENT_3", "rider15");
+        addUserToEventForTest("EVENT_3", "rider16");
+        addUserToEventForTest("EVENT_3", "rider17");
+        addUserToEventForTest("EVENT_3", "rider18");
+        addUserToEventForTest("EVENT_3", "rider19");
+
     }
 
     private void addTestRider(String username, String lycraSize, RiderType riderType, Stance stance, String boardBrand, String kiteBrand, String city) {
@@ -106,6 +170,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
             rider.setBoardBrand(boardBrand);
             rider.setKiteBrand(kiteBrand);
             rider.setCity(city);
+
+            accountRepository.save(rider);
 
         }
     }
@@ -120,6 +186,17 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
             eventRepository.save(event);
         }
+    }
+
+    private void addUserToEventForTest(String eventName, String username){
+        if(eventRepository.existsByName(eventName) && accountRepository.existsByUsername(username)) {
+            Event event = eventRepository.findByName(eventName);
+            Account rider = accountRepository.findByUsername(username).get();
+
+            event.getAccounts().add(rider);
+            eventRepository.save(event);
+        }
+
     }
 
     private void addDefaultUser(String username, String password, String... roles) {

@@ -19,15 +19,15 @@
             <div class="row col-md-12 form-input-row">
                 <div class="col-md-2">#</div>
                 <div class="col-md-3">Imię</div>
-                <div class="col-md-3">Ksywka</div>
+                <!--<div class="col-md-3">Ksywka</div>-->
                 <div class="col-md-4">Twoja ocena</div>
             </div>
 
 
             <div  th:each="rider, index : ${juniorRidersSet}"  class="row col-md-12 form-input-row">
                 <div class="col-md-2" th:text="${index.index + 1}"></div>
-                <div class="col-md-3" th:text="${rider.getName()}"></div>
-                <div class="col-md-3" th:text="${rider.getSurname()}"></div>
+                <div class="col-md-3" th:text="${rider.getUsername()}"></div>
+                <!--<div class="col-md-3" th:text="${rider.getSurname()}"></div>-->
                 <div class="col-md-4">
                     <select class="form-control" type="number" id="riderRank">
                         <option th:value="1">1</option>
