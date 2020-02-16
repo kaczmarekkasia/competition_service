@@ -10,11 +10,11 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -23,6 +23,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private AccountRoleRepository accountRoleRepository;
     private PasswordEncoder passwordEncoder;
     private EventRepository eventRepository;
+    private List<String> listOfTestsEventsNames = new ArrayList<>(Arrays.asList("EVENT_1", "EVENT_2", "EVENT_3"));
 
 
     @Autowired
@@ -47,34 +48,34 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
 //      added for tests only
 //      events
-        addTestEvent("EVENT_1", LocalDate.of(2020, 9,30), "Ustka", EventStatus.PLANNED);
-        addTestEvent("EVENT_2", LocalDate.of(2019, 9,30), "Władysławowo", EventStatus.PLANNED);
-        addTestEvent("EVENT_3", LocalDate.of(2016, 9,30), "Darłowo", EventStatus.PAST);
+        addTestEvent("EVENT_1", LocalDate.of(2020, 9, 30), "Ustka", EventStatus.PLANNED);
+        addTestEvent("EVENT_2", LocalDate.of(2019, 9, 30), "Władysławowo", EventStatus.PLANNED);
+        addTestEvent("EVENT_3", LocalDate.of(2016, 9, 30), "Darłowo", EventStatus.PAST);
 //       riders: 3 woman, 3 junior, 13 man -> for 4 by heat); 1 referee
         addDefaultUser("referee", "referee", "USER", "REFEREE");
 
 
-        addDefaultUser("rider1", "rider1", "USER", "RIDER");
-        addDefaultUser("rider2", "rider2", "USER", "RIDER");
-        addDefaultUser("rider3", "rider3", "USER", "RIDER");
+        addDefaultUser("rider1", "USER", "RIDER");
+        addDefaultUser("rider2", "USER", "RIDER");
+        addDefaultUser("rider3", "USER", "RIDER");
 
-        addDefaultUser("rider4", "rider4", "USER", "RIDER");
-        addDefaultUser("rider5", "rider5", "USER", "RIDER");
-        addDefaultUser("rider6", "rider6", "USER", "RIDER");
+        addDefaultUser("rider4", "USER", "RIDER");
+        addDefaultUser("rider5", "USER", "RIDER");
+        addDefaultUser("rider6", "USER", "RIDER");
 
-        addDefaultUser("rider7", "rider7", "USER", "RIDER");
-        addDefaultUser("rider8", "rider8", "USER", "RIDER");
-        addDefaultUser("rider9", "rider9", "USER", "RIDER");
-        addDefaultUser("rider10", "rider10", "USER", "RIDER");
-        addDefaultUser("rider11", "rider11", "USER", "RIDER");
-        addDefaultUser("rider12", "rider12", "USER", "RIDER");
-        addDefaultUser("rider13", "rider13", "USER", "RIDER");
-        addDefaultUser("rider14", "rider14", "USER", "RIDER");
-        addDefaultUser("rider15", "rider15", "USER", "RIDER");
-        addDefaultUser("rider16", "rider16", "USER", "RIDER");
-        addDefaultUser("rider17", "rider17", "USER", "RIDER");
-        addDefaultUser("rider18", "rider18", "USER", "RIDER");
-        addDefaultUser("rider19", "rider19", "USER", "RIDER");
+        addDefaultUser("rider7", "USER", "RIDER");
+        addDefaultUser("rider8", "USER", "RIDER");
+        addDefaultUser("rider9", "USER", "RIDER");
+        addDefaultUser("rider10", "USER", "RIDER");
+        addDefaultUser("rider11", "USER", "RIDER");
+        addDefaultUser("rider12", "USER", "RIDER");
+        addDefaultUser("rider13", "USER", "RIDER");
+        addDefaultUser("rider14", "USER", "RIDER");
+        addDefaultUser("rider15", "USER", "RIDER");
+        addDefaultUser("rider16", "USER", "RIDER");
+        addDefaultUser("rider17", "USER", "RIDER");
+        addDefaultUser("rider18", "USER", "RIDER");
+        addDefaultUser("rider19", "USER", "RIDER");
 
         addTestRider("rider1", "S", RiderType.JUNIOR, Stance.GOOFY, "wss", "ws", "Gdynia");
         addTestRider("rider2", "M", RiderType.JUNIOR, Stance.REGULAR, "wss", "ws", "Gdynia");
@@ -99,70 +100,31 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         addTestRider("rider19", "S", RiderType.MAN, Stance.GOOFY, "wss", "ws", "Gdynia");
 
 //        adding users to events for tests
-        addUserToEventForTest("EVENT_1", "rider1");
-        addUserToEventForTest("EVENT_1", "rider2");
-        addUserToEventForTest("EVENT_1", "rider3");
-        addUserToEventForTest("EVENT_1", "rider4");
-        addUserToEventForTest("EVENT_1", "rider5");
-        addUserToEventForTest("EVENT_1", "rider6");
-        addUserToEventForTest("EVENT_1", "rider7");
-        addUserToEventForTest("EVENT_1", "rider8");
-        addUserToEventForTest("EVENT_1", "rider9");
-        addUserToEventForTest("EVENT_1", "rider10");
-        addUserToEventForTest("EVENT_1", "rider11");
-        addUserToEventForTest("EVENT_1", "rider12");
-        addUserToEventForTest("EVENT_1", "rider13");
-        addUserToEventForTest("EVENT_1", "rider14");
-        addUserToEventForTest("EVENT_1", "rider15");
-        addUserToEventForTest("EVENT_1", "rider16");
-        addUserToEventForTest("EVENT_1", "rider17");
-        addUserToEventForTest("EVENT_1", "rider18");
-        addUserToEventForTest("EVENT_1", "rider19");
-
-        addUserToEventForTest("EVENT_2", "rider1");
-        addUserToEventForTest("EVENT_2", "rider2");
-        addUserToEventForTest("EVENT_2", "rider3");
-        addUserToEventForTest("EVENT_2", "rider4");
-        addUserToEventForTest("EVENT_2", "rider5");
-        addUserToEventForTest("EVENT_2", "rider6");
-        addUserToEventForTest("EVENT_2", "rider7");
-        addUserToEventForTest("EVENT_2", "rider8");
-        addUserToEventForTest("EVENT_2", "rider9");
-        addUserToEventForTest("EVENT_2", "rider10");
-        addUserToEventForTest("EVENT_2", "rider11");
-        addUserToEventForTest("EVENT_2", "rider12");
-        addUserToEventForTest("EVENT_2", "rider13");
-        addUserToEventForTest("EVENT_2", "rider14");
-        addUserToEventForTest("EVENT_2", "rider15");
-        addUserToEventForTest("EVENT_2", "rider16");
-        addUserToEventForTest("EVENT_2", "rider17");
-        addUserToEventForTest("EVENT_2", "rider18");
-        addUserToEventForTest("EVENT_2", "rider19");
-
-        addUserToEventForTest("EVENT_3", "rider1");
-        addUserToEventForTest("EVENT_3", "rider2");
-        addUserToEventForTest("EVENT_3", "rider3");
-        addUserToEventForTest("EVENT_3", "rider4");
-        addUserToEventForTest("EVENT_3", "rider5");
-        addUserToEventForTest("EVENT_3", "rider6");
-        addUserToEventForTest("EVENT_3", "rider7");
-        addUserToEventForTest("EVENT_3", "rider8");
-        addUserToEventForTest("EVENT_3", "rider9");
-        addUserToEventForTest("EVENT_3", "rider10");
-        addUserToEventForTest("EVENT_3", "rider11");
-        addUserToEventForTest("EVENT_3", "rider12");
-        addUserToEventForTest("EVENT_3", "rider13");
-        addUserToEventForTest("EVENT_3", "rider14");
-        addUserToEventForTest("EVENT_3", "rider15");
-        addUserToEventForTest("EVENT_3", "rider16");
-        addUserToEventForTest("EVENT_3", "rider17");
-        addUserToEventForTest("EVENT_3", "rider18");
-        addUserToEventForTest("EVENT_3", "rider19");
-
+        for (String eventName : listOfTestsEventsNames) {
+            addUserToEventForTest(eventName, "rider1");
+            addUserToEventForTest(eventName, "rider2");
+            addUserToEventForTest(eventName, "rider3");
+            addUserToEventForTest(eventName, "rider4");
+            addUserToEventForTest(eventName, "rider5");
+            addUserToEventForTest(eventName, "rider6");
+            addUserToEventForTest(eventName, "rider7");
+            addUserToEventForTest(eventName, "rider8");
+            addUserToEventForTest(eventName, "rider9");
+            addUserToEventForTest(eventName, "rider10");
+            addUserToEventForTest(eventName, "rider11");
+            addUserToEventForTest(eventName, "rider12");
+            addUserToEventForTest(eventName, "rider13");
+            addUserToEventForTest(eventName, "rider14");
+            addUserToEventForTest(eventName, "rider15");
+            addUserToEventForTest(eventName, "rider16");
+            addUserToEventForTest(eventName, "rider17");
+            addUserToEventForTest(eventName, "rider18");
+            addUserToEventForTest(eventName, "rider19");
+        }
     }
 
     private void addTestRider(String username, String lycraSize, RiderType riderType, Stance stance, String boardBrand, String kiteBrand, String city) {
-        if(accountRepository.existsByUsername(username)){
+        if (accountRepository.existsByUsername(username)) {
             Account rider = accountRepository.findByUsername(username).get();
             rider.setLycraSize(lycraSize);
             rider.setRiderType(riderType);
@@ -177,7 +139,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     }
 
     private void addTestEvent(String eventName, LocalDate eventDate, String eventLocalization, EventStatus eventStatus) {
-        if(!eventRepository.existsByName(eventName)){
+        if (!eventRepository.existsByName(eventName)) {
             Event event = new Event();
             event.setName(eventName);
             event.setDate(eventDate);
@@ -188,8 +150,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         }
     }
 
-    private void addUserToEventForTest(String eventName, String username){
-        if(eventRepository.existsByName(eventName) && accountRepository.existsByUsername(username)) {
+    private void addUserToEventForTest(String eventName, String username) {
+        if (eventRepository.existsByName(eventName) && accountRepository.existsByUsername(username)) {
             Event event = eventRepository.findByName(eventName);
             Account rider = accountRepository.findByUsername(username).get();
 
@@ -199,11 +161,11 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
     }
 
-    private void addDefaultUser(String username, String password, String... roles) {
-        if (!accountRepository.existsByUsername(username)) {
+    private void addDefaultUser(String usernameAndPassword, String... roles) {
+        if (!accountRepository.existsByUsername(usernameAndPassword)) {
             Account account = new Account();
-            account.setUsername(username);
-            account.setPassword(passwordEncoder.encode(password));
+            account.setUsername(usernameAndPassword);
+            account.setPassword(passwordEncoder.encode(usernameAndPassword));
 
             Set<AccountRole> userRoles = findRoles(roles);
             account.setAccountRoles(userRoles);
@@ -230,7 +192,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     }
 
 
-    private void addTestEvents(Event event){
+    private void addTestEvents(Event event) {
         eventRepository.save(event);
     }
 
