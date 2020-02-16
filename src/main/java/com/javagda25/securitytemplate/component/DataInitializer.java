@@ -52,8 +52,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         addTestEvent("EVENT_2", LocalDate.of(2019, 9, 30), "Władysławowo", EventStatus.PLANNED);
         addTestEvent("EVENT_3", LocalDate.of(2016, 9, 30), "Darłowo", EventStatus.PAST);
 //       riders: 3 woman, 3 junior, 13 man -> for 4 by heat); 1 referee
-        addDefaultUser("referee", "referee", "USER", "REFEREE");
-
+        addDefaultUser("referee","USER", "REFEREE");
 
         addDefaultUser("rider1", "USER", "RIDER");
         addDefaultUser("rider2", "USER", "RIDER");
@@ -189,11 +188,6 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
             accountRoleRepository.save(newRole);
         }
-    }
-
-
-    private void addTestEvents(Event event) {
-        eventRepository.save(event);
     }
 
 }
