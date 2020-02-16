@@ -19,7 +19,7 @@ public class Event {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Account> accounts;
 
     private String name;
@@ -40,9 +40,10 @@ public class Event {
     private Set<Round> rounds;
 
 
-    public Event(String name, LocalDate date, EventStatus status) {
+    public Event(String name, LocalDate date, String localization, EventStatus status) {
         this.name = name;
         this.date = date;
+        this.localization = localization;
         this.status = status;
     }
 }

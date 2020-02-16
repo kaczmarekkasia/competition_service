@@ -91,7 +91,7 @@
                 </a>
             </div>
 
-            <div class="col-1" sec:authorize="!hasRole('ADMIN')" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
+            <div class="col-1" sec:authorize="!hasRole('ADMIN') || hasRole('RIDER')" th:if="${event.getStatus().name() != 'PAST' && currentlyLoggedIn != null && !event.getAccounts().contains(currentlyLoggedIn)}">
                 <a th:href="@{/event/joinEvent(eventId=${event.getId()})}" class="col-12">
                     <button type="button" class="btn btn-primary">
                         Dołącz

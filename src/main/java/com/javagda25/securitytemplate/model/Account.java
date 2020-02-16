@@ -60,7 +60,7 @@ public class Account {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "accounts",fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @ManyToMany(mappedBy = "accounts",fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private Set<Event> events;
 

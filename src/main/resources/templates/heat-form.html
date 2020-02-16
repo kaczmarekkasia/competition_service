@@ -13,7 +13,7 @@
 
     <div th:each="heat, index : ${roundHeatSet}">
 
-        <form th:action="@{/heat/setRiders}" method="post" th:object="${heat}">
+        <form th:action="@{/heat/setRiders}" method="post" th:object="${round.getHeats()}">
 
             <input th:type="hidden" th:name="heatId" th:value="${heat.getId()}">
             <input th:type="hidden" th:name="roundId" th:value="${roundId}">
