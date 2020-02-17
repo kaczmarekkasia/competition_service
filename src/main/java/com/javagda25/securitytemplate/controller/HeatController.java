@@ -1,6 +1,10 @@
 package com.javagda25.securitytemplate.controller;
 
-import com.javagda25.securitytemplate.model.*;
+import com.javagda25.securitytemplate.model.Account;
+import com.javagda25.securitytemplate.model.Heat;
+import com.javagda25.securitytemplate.model.RiderType;
+import com.javagda25.securitytemplate.model.Round;
+import com.javagda25.securitytemplate.model.dto.MultipleHeatsDto;
 import com.javagda25.securitytemplate.service.AccountService;
 import com.javagda25.securitytemplate.service.EventService;
 import com.javagda25.securitytemplate.service.HeatService;
@@ -34,19 +38,14 @@ public class HeatController {
         this.accountService = accountService;
     }
 
-
-
-
-
     @GetMapping("/setRiders")
     public String setManRidersToHeats(Model model, @RequestParam(name = "roundId") Long roundId) {
         model.addAttribute("roundId", roundId);
 
         Round round = roundService.findById(roundId);
         model.addAttribute("round", round);
-
-        Set<Heat> roundHestSet = round.getHeats();
-        model.addAttribute("roundHeatSet", roundHestSet);
+        model.addAttribute("heats", generateHeats(round));
+        model.addAttribute("roundHeatSet", round.getHeats());
 
         Set<Account> manRiders = accountService.ridersByRiderType(RiderType.MAN, round);
         model.addAttribute("manRiders", manRiders);
@@ -57,9 +56,15 @@ public class HeatController {
         Set<Account> juniorRiders = accountService.ridersByRiderType(RiderType.JUNIOR, round);
         model.addAttribute("juniorRiders", juniorRiders);
 
-
-
         return "heat-form";
+    }
+
+    private MultipleHeatsDto generateHeats(Round round) {
+        MultipleHeatsDto multipleHeatsDto = new MultipleHeatsDto();
+        round.getHeats()
+                .forEach(heat -> multipleHeatsDto.addHeat(new Heat()));
+
+        return multipleHeatsDto;
     }
 
     @PostMapping("/setRiders")

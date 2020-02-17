@@ -10,6 +10,30 @@
 <div class="container">
     <h1 class="nav-sign" style="text-align: center" th:text="'Dodaj zawodników do ' + ${round.getName()}"></h1>
 
+<!--    <form action="#" th:action="@{/heat/setRiders}" th:object="${heats}" method="post">-->
+<!--        <fieldset>-->
+<!--            <input type="submit" id="submitButton" th:value="Save">-->
+<!--            <input type="reset" id="resetButton" name="reset" th:value="Reset"/>-->
+
+<!--                <div th:each="book, itemStat : *{heats}">-->
+
+<!--                    <div class="col-md-10" th:switch="${round.getName()}">-->
+
+<!--                        <span th:each="rider : ${manRiders}" th:case="'Round 1 MAN'">-->
+<!--                            <select th:name="'riderId_'+ ${rider.getId()}" id="manRiderId"-->
+<!--                                    class="form-control col-md-12">-->
+<!--                                <option th:value="null" text="Please Select"></option>-->
+<!--                                <option th:each="rider : ${manRiders}"-->
+<!--                                        th:text="${rider.getUsername()}"-->
+<!--                                        th:value="${rider.getId()}">-->
+<!--                                </option>-->
+<!--                            </select>-->
+<!--                        </span>-->
+<!--                </div>-->
+
+<!--        </fieldset>-->
+<!--    </form>-->
+
 
     <div th:each="heat, index : ${roundHeatSet}">
 

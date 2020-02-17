@@ -5,8 +5,7 @@ import com.javagda25.securitytemplate.model.dto.AccountPasswordResetRequest;
 import com.javagda25.securitytemplate.repository.AccountRepository;
 import com.javagda25.securitytemplate.repository.AccountRoleRepository;
 import com.javagda25.securitytemplate.repository.RiderRankRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,25 +16,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
 
-    private AccountRepository accountRepository;
-    private PasswordEncoder passwordEncoder;
-    private AccountRoleService accountRoleService;
-    private AccountRoleRepository accountRoleRepository;
-    private RiderRankRepository riderRankRepository;
-
-
-    @Autowired
-    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, AccountRoleService accountRoleService, AccountRoleRepository accountRoleRepository, RiderRankRepository riderRankRepository) {
-        this.accountRepository = accountRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.accountRoleService = accountRoleService;
-        this.accountRoleRepository = accountRoleRepository;
-        this.riderRankRepository = riderRankRepository;
-    }
-
-
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AccountRoleService accountRoleService;
+    private final AccountRoleRepository accountRoleRepository;
+    private final RiderRankRepository riderRankRepository;
 
     public boolean register(Account account) {
         if (accountRepository.existsByUsername(account.getUsername())) {
@@ -104,9 +92,7 @@ public class AccountService {
                 if (values[0].equals("on")) {
                     Optional<AccountRole> accountRoleOptional = accountRoleRepository.findByName(roleName);
 
-                    if (accountRoleOptional.isPresent()) {
-                        newCollectionOfRoles.add(accountRoleOptional.get());
-                    }
+                    accountRoleOptional.ifPresent(newCollectionOfRoles::add);
                 }
             }
 
@@ -127,22 +113,22 @@ public class AccountService {
 
     public void saveAsRider(Account rider, Principal principal) {
         Optional<Account> optionalAccount = accountRepository.findByUsername(principal.getName());
-        if (optionalAccount.isPresent()) {
-            Account account = optionalAccount.get();
-            rider.setUsername(account.getUsername());
-            rider.setPassword(account.getPassword());
-            rider.setAccountRoles(account.getAccountRoles());
+        optionalAccount.ifPresent(value -> {
+            rider.setUsername(value.getUsername());
+            rider.setPassword(value.getPassword());
+            rider.setAccountRoles(value.getAccountRoles());
             Optional<AccountRole> accountRoleOptional = accountRoleRepository.findByName("RIDER");
-            if(accountRoleOptional.isPresent()) {
-                rider.getAccountRoles().add(accountRoleOptional.get());
+
+            accountRoleOptional.ifPresent(accountRole -> {
+                rider.getAccountRoles().add(accountRole);
                 accountRepository.save(rider);
-            }
-        }
+            });
+        });
     }
 
     public List<Account> getAllRiders() {
         Optional<AccountRole> optionalAccountRole = accountRoleRepository.findByName("RIDER");
-        if(optionalAccountRole.isPresent()){
+        if (optionalAccountRole.isPresent()) {
             return accountRepository.findAccountsByAccountRolesContains(optionalAccountRole.get());
         }
         throw new EntityNotFoundException();
@@ -155,6 +141,7 @@ public class AccountService {
             if (!riderIdRank.contains("_")) {
                 continue;
             }
+
             String id = riderIdRank.split("_")[1];
             Long riderId = Long.parseLong(id);
 
@@ -175,8 +162,7 @@ public class AccountService {
         }
     }
 
-
-    public Set<Account> ridersByRiderType (RiderType riderType, Round round){
+    public Set<Account> ridersByRiderType(RiderType riderType, Round round) {
         return round.getEvent().getAccounts().stream()
                 .filter(account -> account.getRiderType().equals(riderType))
                 .collect(Collectors.toSet());
