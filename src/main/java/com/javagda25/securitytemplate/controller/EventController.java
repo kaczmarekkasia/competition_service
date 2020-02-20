@@ -18,7 +18,7 @@ import java.security.Principal;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(path = "/event/")
+@RequestMapping(path = "/event")
 public class EventController {
 
     private EventService eventService;
@@ -57,10 +57,12 @@ public class EventController {
     @GetMapping("/list")
     public String listEvents(Model model, Principal principal) {
         model.addAttribute("eventList", eventService.listAll());
+
         if (principal != null) {
             Account currentlyLoggedIn = accountService.findByUsername(principal.getName());
             model.addAttribute("currentlyLoggedIn", currentlyLoggedIn);
         }
+
         return "event-list";
     }
 
@@ -95,17 +97,17 @@ public class EventController {
     }
 
     @GetMapping("/removeRider")
-    public String removeRider(@RequestParam (name = "riderId") Long riderId,
-                              @RequestParam (name = "eventId") Long eventId){
+    public String removeRider(@RequestParam(name = "riderId") Long riderId,
+                              @RequestParam(name = "eventId") Long eventId) {
 
         Event event = eventService.findById(eventId);
         Optional<Account> optionalAccount = accountService.findById(riderId);
 
-        if(optionalAccount.isPresent()) {
-            Account rider = optionalAccount.get();
+        optionalAccount.map(rider -> {
             event.getAccounts().remove(rider);
             eventRepository.save(event);
-        }
+            return rider;
+        }).orElseThrow(() -> new IllegalArgumentException("Invalid account id"));
 
         return "redirect:/event/list";
     }

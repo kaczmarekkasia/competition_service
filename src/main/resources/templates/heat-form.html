@@ -10,80 +10,65 @@
 <div class="container">
     <h1 class="nav-sign" style="text-align: center" th:text="'Dodaj zawodników do ' + ${round.getName()}"></h1>
 
+    <form th:action="@{/heat/setRiders}" method="post" th:object="${heatsDto}">
 
-    <div th:each="heat, index : ${roundHeatSet}">
+        <div th:each="heat, stat : ${heatsDto.heats}">
 
-        <form th:action="@{/heat/setRiders}" method="post" th:object="${round.getHeats()}">
+            <input th:type="hidden" th:name="heatId" th:value="${heatsDto.getHeats()[__${stat.index}__].id}">
+            <input th:type="hidden" th:name="roundId" th:value="${heatsDto.getHeats()[__${stat.index}__].round.id}">
 
-            <input th:type="hidden" th:name="heatId" th:value="${heat.getId()}">
-            <input th:type="hidden" th:name="roundId" th:value="${roundId}">
-            <div class="row col-md-5 form-container">
-
-                <div class="row col-md-5 form-input-row">
-                    <h3 th:text="${heat.getName()}"></h3>
+            <div class="row col-md-10 form-container">
+                <div class="row col-md-10 form-input-row">
+                    <h3 th:text="${heatsDto.getHeats()[__${stat.index}__].name}"></h3>
                 </div>
 
-                <div class="row col-md-12 form-input-row">
-                    <div class="col-md-2">#</div>
-                    <div class="col-md-10">Zawodnik</div>
+                <div class="col-md-10" th:switch="${heatsDto.getHeats()[__${stat.index}__].round.name}">
+
+                    <input th:type="hidden" th:value="${heatsDto.getHeats()[__${stat.index}__].id}" th:field="*{heats[__${stat.index}__].id}"/>
+
+                    <span th:case="'Round 1 MAN'">
+                        <select multiple="multiple" th:field="*{heats[__${stat.index}__].riders}" id="manRiderSelect"
+                                class="form-control col-md-12">
+                            <option th:each="rider : ${manRiders}"
+                                    th:value="${{rider}}"
+                                    th:text="${rider.getUsername()}">
+                            </option>
+                        </select>
+                    </span>
+
+                    <span th:case="'Final WOMAN'">
+                        <select multiple="multiple" th:field="*{heats[__${stat.index}__].riders}" id="womanRiderSelect"
+                                class="form-control col-md-12">
+                            <option th:each="rider : ${womanRiders}"
+                                    th:value="${{rider}}"
+                                    th:text="${rider.getUsername()}">
+                            </option>
+                        </select>
+                    </span>
+
+                    <span th:case="'Final JUNIOR'">
+                        <select multiple="multiple" th:field="*{heats[__${stat.index}__].riders}" id="juniorRiderSelect"
+                                class="form-control col-md-12">
+                            <option th:each="rider : ${juniorRiders}"
+                                    th:value="${{rider}}"
+                                    th:text="${rider.getUsername()}">
+                            </option>
+                        </select>
+                    </span>
                 </div>
-
-                <div th:each="i: ${#numbers.sequence(0, 3)}" class="row col-md-12 form-input-row">
-                    <div class="col-md-2" th:text="${i + 1}"></div>
-
-                    <div class="col-md-10" th:switch="${round.getName()}">
-                        <span th:each="rider : ${manRiders}" th:case="'Round 1 MAN'">
-                            <select th:name="'riderId_'+ ${rider.getId()}" id="manRiderId"
-                                    class="form-control col-md-12">
-                                <option th:value="null" text="Please Select"></option>
-                                <option th:each="rider : ${manRiders}"
-                                        th:text="${rider.getUsername()}"
-                                        th:value="${rider.getId()}">
-                                </option>
-                            </select>
-                        </span>
-
-                        <span th:each="rider : ${womanRiders}" th:case="'Final WOMAN'">
-                            <select th:name="'riderId_'+ ${rider.getId()}" id="womanRiderId"
-                                    class="form-control col-md-12">
-                                <option th:value="null" text="Please Select"></option>
-                                <option th:each="rider : ${womanRiders}"
-                                        th:text="${rider.getUsername()}"
-                                        th:value="${rider.getId()}">
-                                </option>
-                            </select>
-                        </span>
-
-                        <span th:each="rider : ${juniorRiders}" th:case="'Final JUNIOR'">
-                            <select th:name="'riderId_'+ ${rider.getId()}" id="juniorRiderId"
-                                    class="form-control col-md-12">
-                                <option th:value="null" text="Please Select"></option>
-                                <option th:each="rider : ${juniorRiders}"
-                                        th:text="${rider.getUsername()}"
-                                        th:value="${rider.getId()}">
-                                </option>
-                            </select>
-                        </span>
-                    </div>
-
-                </div>
-
-                <div class="row col-md-12 form-button-row">
-                    <div class="col-md-5">
-                        <button type="reset" class="btn btn-warning offset-3 col-md-12">Zresetuj</button>
-                    </div>
-                    <div class="col-md-5">
-                        <button type="submit" class="btn btn-primary offset-3 col-md-12">Zapisz</button>
-                    </div>
-                </div>
-
-
             </div>
+        </div>
 
-        </form>
-
+        <div class="row col-md-12 form-button-row">
+            <div class="col-md-5">
+                <button type="reset" class="btn btn-warning offset-3 col-md-12">Zresetuj</button>
             </div>
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-primary offset-3 col-md-12">Zapisz</button>
+            </div>
+        </div>
 
+    </form>
 
 </div>
 <th:block th:replace="fragments :: footer" th:remove="tag"/>
