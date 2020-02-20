@@ -1,65 +1,46 @@
 package com.javagda25.securitytemplate.service;
 
-import com.javagda25.securitytemplate.model.Account;
 import com.javagda25.securitytemplate.model.Heat;
-import com.javagda25.securitytemplate.repository.AccountRepository;
+import com.javagda25.securitytemplate.model.dto.MultipleHeatsDto;
 import com.javagda25.securitytemplate.repository.HeatRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class HeatService {
 
-    private HeatRepository heatRepository;
-    private AccountRepository accountRepository;
+    private final HeatRepository heatRepository;
 
-    @Autowired
-    public HeatService(HeatRepository heatRepository, AccountRepository accountRepository) {
-        this.heatRepository = heatRepository;
-        this.accountRepository = accountRepository;
+    public void save(MultipleHeatsDto multipleHeatsDto) {
+        List<Long> heatIds = mapHeatsToHeatIds(multipleHeatsDto);
+
+        List<Heat> heatsFromDb = heatRepository.findAllById(heatIds);
+
+        copyRiderData(multipleHeatsDto, heatsFromDb);
+        updateToFullOfRiders(heatsFromDb);
+
+        heatRepository.saveAll(heatsFromDb);
     }
 
-    public void save(HttpServletRequest request, Long heatId) {
-        Map<String, String[]> formParameters = request.getParameterMap();
-
-        for (Map.Entry<String, String[]> entry : formParameters.entrySet()) {
-            if (entry.getKey().contains("_")){
-                String[] riders_id = entry.getValue();
-
-                for (String id : riders_id) {
-                    Long riderId = Long.parseLong(id);
-                    Optional<Account> optionalRider = accountRepository.findById(riderId);
-                    if (optionalRider.isPresent()) {
-                        Account rider = optionalRider.get();
-                        Set<Account> riderSet = new HashSet<>();
-                        riderSet.add(rider);
-
-                        Optional<Heat> optionalHeat = findById(heatId);
-
-                        if (optionalHeat.isPresent()) {
-                            Heat heat = optionalHeat.get();
-
-                            for (Account r : riderSet) {
-                                heat.getRiders().add(r);
-                            }
-                            heat.setHeatAsFullOfRiders();
-                            heatRepository.save(heat);
-                        }
-                    }else throw new EntityNotFoundException();
-
-                }
-            }
-        }
+    private List<Long> mapHeatsToHeatIds(MultipleHeatsDto multipleHeatsDto) {
+        return multipleHeatsDto.getHeats()
+                .stream()
+                .map(Heat::getId)
+                .collect(Collectors.toList());
     }
 
-        private Optional<Heat> findById (Long heatId){
-            return heatRepository.findById(heatId);
-        }
+    private void copyRiderData(MultipleHeatsDto multipleHeatsDto, List<Heat> heatsFromDb) {
+        heatsFromDb.forEach(heat -> multipleHeatsDto.getHeats().stream()
+                .filter(updatedHeat -> updatedHeat.getId().equals(heat.getId()))
+                .findAny()
+                .ifPresent(updatedHeatWithMatchingId -> heat.setRiders(updatedHeatWithMatchingId.getRiders())));
     }
+
+    private void updateToFullOfRiders(List<Heat> heatsFromDb) {
+        heatsFromDb.forEach(heat -> heat.setIsFullOfRiders(heat.getRiders().size() == 4));
+    }
+}

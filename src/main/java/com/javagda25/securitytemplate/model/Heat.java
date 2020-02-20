@@ -12,6 +12,10 @@ import java.util.Set;
 @NoArgsConstructor
 public class Heat {
 
+    public Heat(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,12 +42,7 @@ public class Heat {
     @OneToMany(fetch = FetchType.LAZY)
     private Set<RiderRank> rankSet;
 
-
     private Boolean isFullOfRiders = false;
-
-    public Heat(String name) {
-        this.name = name;
-    }
 
     public void setHeatAsFullOfRiders(){
         isFullOfRiders = true;
